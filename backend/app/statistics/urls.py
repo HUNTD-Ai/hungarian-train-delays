@@ -43,7 +43,7 @@ async def get_monthly_mean() -> TimestampedDelays:
                 ),
                 delay=5.2,
             )
-            for i in range(12)
+            for i in range(1, 13)
         ]
     )
 
@@ -59,7 +59,7 @@ async def get_monthly_sum() -> TimestampedDelays:
                 ),
                 delay=4400,
             )
-            for i in range(12)
+            for i in range(1, 13)
         ]
     )
 
@@ -75,7 +75,7 @@ async def get_highest_delays() -> TimestampedDelays:
                 ),
                 delay=300,
             )
-            for i in range(30)
+            for i in range(1, 30)
         ]
     )
 
@@ -95,7 +95,7 @@ async def get_mean_route_delay(
                     ),
                     delay=300,
                 )
-                for i in range(30)
+                for i in range(1, 30)
             ]
         ),
     )

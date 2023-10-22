@@ -1,7 +1,9 @@
+import DelayPredictionCard from '../components/delay-prediction-card.tsx';
+
 const HomePage = () => {
   return (
-    <div className="bg-backgroundLight dark:bg-backgroundDark text-textColor flex h-full w-full items-center justify-center">
-      Home
+    <div className="flex h-full w-full items-center justify-center bg-backgroundLight text-textColor dark:bg-backgroundDark">
+      <DelayPredictionCard />
     </div>
   );
 };

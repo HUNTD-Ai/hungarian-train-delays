@@ -8,23 +8,25 @@ const Navbar = () => {
   return (
     <div
       id="navbar"
-      className="flex h-16 w-full items-center bg-primaryColor">
+      className="flex h-16 w-full items-center justify-center bg-primaryColor sm:justify-start">
       <Logo />
-      <NavbarItem
-        icon={ScheduleIcon}
-        pageName="Delay prediction"
-        route="/"
-      />
-      <NavbarItem
-        icon={BarChartIcon}
-        pageName="Statistics"
-        route="statistics"
-      />
-      <NavbarItem
-        icon={SmartToyIcon}
-        pageName="Model"
-        route="model"
-      />
+      <div className="hidden h-16 sm:flex">
+        <NavbarItem
+          icon={ScheduleIcon}
+          pageName="Delay prediction"
+          route="/"
+        />
+        <NavbarItem
+          icon={BarChartIcon}
+          pageName="Statistics"
+          route="statistics"
+        />
+        <NavbarItem
+          icon={SmartToyIcon}
+          pageName="Model"
+          route="model"
+        />
+      </div>
     </div>
   );
 };

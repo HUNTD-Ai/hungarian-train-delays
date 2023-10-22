@@ -1,29 +1,28 @@
 import Logo from './logo.tsx';
 import NavbarItem from './navbar-item.tsx';
-import { ReactElement } from 'react';
+import ScheduleIcon from '../assets/icons/schedule.svg';
+import BarChartIcon from '../assets/icons/bar-chart.svg';
+import SmartToyIcon from '../assets/icons/smart-toy.svg';
 
 const Navbar = () => {
   return (
     <div
       id="navbar"
-      className="bg-primaryColor flex h-16 w-full items-center">
+      className="flex h-16 w-full items-center bg-primaryColor">
       <Logo />
       <NavbarItem
-        icon={null as never as ReactElement}
+        icon={ScheduleIcon}
         pageName="Delay prediction"
-        selected={true}
         route="/"
       />
       <NavbarItem
-        icon={null as never as ReactElement}
+        icon={BarChartIcon}
         pageName="Statistics"
-        selected={false}
         route="statistics"
       />
       <NavbarItem
-        icon={null as never as ReactElement}
+        icon={SmartToyIcon}
         pageName="Model"
-        selected={false}
         route="model"
       />
     </div>

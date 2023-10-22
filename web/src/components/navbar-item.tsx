@@ -1,33 +1,32 @@
-import React, { ReactElement } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
-  icon: ReactElement;
+  icon: string;
   pageName: string;
-  selected: boolean;
   route: string;
 };
 
-const NavbarItem: React.FC<Props> = ({ icon, pageName, selected, route }) => {
-  const navigate = useNavigate();
-
-  const navigateToPage = () => {
-    navigate(route);
-  };
+const NavbarItem: React.FC<Props> = ({ icon, pageName, route }) => {
+  const activeClass =
+    'flex h-full items-center gap-x-2 bg-primaryColorHover px-4';
+  const inactiveClass =
+    'flex h-full items-center gap-x-2 px-4 hover:bg-primaryColorHover';
 
   return (
-    <div
-      className={
-        selected
-          ? 'bg-primaryColorHover flex h-full items-center gap-x-2 px-4'
-          : 'hover:bg-primaryColorHover flex h-full items-center gap-x-2 px-4'
-      }
-      onClick={() => navigateToPage()}>
-      {icon}
-      <span className="text-textColor cursor-pointer text-lg font-semibold">
-        {pageName}
-      </span>
-    </div>
+    <NavLink
+      to={route}
+      className={({ isActive }) => (isActive ? activeClass : inactiveClass)}>
+      <div className="flex items-center gap-x-2">
+        <img
+          src={icon}
+          alt="page icon"
+        />
+        <span className="cursor-pointer text-lg font-semibold text-textColor">
+          {pageName}
+        </span>
+      </div>
+    </NavLink>
   );
 };
 

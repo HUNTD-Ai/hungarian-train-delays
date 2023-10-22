@@ -12,10 +12,10 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
     <div className="flex h-full w-full flex-col overflow-hidden p-10">
       <div
         id="train-list"
-        className="h-full w-full overflow-y-auto">
+        className="h-full w-full overflow-y-auto text-textBoxTextColorLight dark:border-textBoxTextColorDark">
         <div
           id="train-list-table-header"
-          className="flex h-12 w-full items-center rounded-t-[10px] border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark">
+          className="flex h-12 w-full items-center rounded-t-[10px] border border-textBoxTextColorLight bg-textBoxBackgroundLight dark:border-textBoxTextColorDark dark:bg-textBoxBackgroundDark">
           <div className="flex h-full w-full items-center pl-2">
             <span>Train number</span>
           </div>
@@ -34,8 +34,8 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
             key={index}
             className={
               index === trains.length - 1
-                ? 'flex h-12 w-full items-center rounded-b-[10px] border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark'
-                : 'flex h-12 w-full items-center border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark'
+                ? 'flex h-12 w-full items-center rounded-b-[10px] border border-textBoxTextColorLight bg-textBoxBackgroundLight dark:border-textBoxTextColorDark dark:bg-textBoxBackgroundDark'
+                : 'flex h-12 w-full items-center border border-textBoxTextColorLight bg-textBoxBackgroundLight dark:border-textBoxTextColorDark dark:bg-textBoxBackgroundDark'
             }>
             <div className="flex h-full w-full items-center gap-x-2 pl-2">
               <img

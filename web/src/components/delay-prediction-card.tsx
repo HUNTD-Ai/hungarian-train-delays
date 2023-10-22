@@ -9,7 +9,7 @@ const DelayPredictionCard = () => {
   const [to, setTo] = useState<string>('Debrecen');
   const [date, setDate] = useState<string>('');
 
-  const [popupVisible, setPopupVisible] = useState<boolean>(true);
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [train, setTrain] = useState<Train | null>({
     trainNumber: '6020',
     serviceName: 'MÁV',

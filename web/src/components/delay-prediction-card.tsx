@@ -156,7 +156,7 @@ const DelayPredictionCard = () => {
     <>
       <div
         id="delay-prediction-card"
-        className="bg-cardBackgroundLight dark:bg-cardBackgroundDark flex w-[512px] flex-col rounded-[25px] drop-shadow-md">
+        className="flex w-[512px] flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark">
         <div
           id="delay-prediction-card-header"
           className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-12">
@@ -172,7 +172,7 @@ const DelayPredictionCard = () => {
             placeholder="From"
             value={from}
             onChange={event => setFrom(event.target.value)}
-            className="bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark text-textBoxTextColorLight dark:text-textBoxTextColorDark h-12 w-full rounded-[10px] px-3 text-xl"
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
           />
           <input
             name="to"
@@ -181,7 +181,7 @@ const DelayPredictionCard = () => {
             placeholder="To"
             value={to}
             onChange={event => setTo(event.target.value)}
-            className="bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark text-textBoxTextColorLight dark:text-textBoxTextColorDark h-12 w-full rounded-[10px] px-3 text-xl"
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
           />
           <div className="flex w-full gap-x-6">
             <input
@@ -191,7 +191,7 @@ const DelayPredictionCard = () => {
               placeholder="Date"
               value={date}
               onChange={event => setDate(event.target.value)}
-              className="bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark text-textBoxTextColorLight dark:text-textBoxTextColorDark h-12 w-full rounded-[10px] px-3 text-xl"
+              className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
             />
             <div
               id="train-selector-button"
@@ -242,7 +242,7 @@ const DelayPredictionCard = () => {
       {popupVisible && (
         <div
           id="train-selector-popup"
-          className="bg-cardBackgroundLight dark:bg-cardBackgroundDark absolute left-1/2 top-24 z-10 flex h-[calc(100%-8rem)] w-[640px] -translate-x-1/2 flex-col rounded-[25px] drop-shadow-md">
+          className="absolute left-1/2 top-24 z-10 flex h-[calc(100%-8rem)] w-[640px] -translate-x-1/2 flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark">
           <div
             id="train-selector-popup-header"
             className="flex h-12 w-full flex-shrink-0 items-center justify-between rounded-t-[25px] bg-primaryColor px-4">

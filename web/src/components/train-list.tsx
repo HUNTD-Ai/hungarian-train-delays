@@ -9,13 +9,13 @@ type Props = {
 
 const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
   return (
-    <div className="flex h-full w-full flex-col p-10">
+    <div className="flex h-full w-full flex-col overflow-hidden p-10">
       <div
         id="train-list"
         className="h-full w-full overflow-y-auto">
         <div
           id="train-list-table-header"
-          className="dark:bg-textBoxBackgroundDark bg-textBoxBackgroundLight flex h-12 w-full items-center rounded-t-[10px] border border-textColor">
+          className="flex h-12 w-full items-center rounded-t-[10px] border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark">
           <div className="flex h-full w-full items-center pl-2">
             <span>Train number</span>
           </div>
@@ -34,8 +34,8 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
             key={index}
             className={
               index === trains.length - 1
-                ? 'dark:bg-textBoxBackgroundDark bg-textBoxBackgroundLight flex h-12 w-full items-center rounded-b-[10px] border border-textColor'
-                : 'dark:bg-textBoxBackgroundDark bg-textBoxBackgroundLight flex h-12 w-full items-center border border-textColor'
+                ? 'flex h-12 w-full items-center rounded-b-[10px] border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark'
+                : 'flex h-12 w-full items-center border border-textColor bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark'
             }>
             <div className="flex h-full w-full items-center gap-x-2 pl-2">
               <img
@@ -68,7 +68,6 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
           </div>
         ))}
       </div>
-      <div className="h-12 w-full"></div>
     </div>
   );
 };

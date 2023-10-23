@@ -1,0 +1,16 @@
+FROM python:3.8-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y libgomp1
+ADD ./requirements.txt /app/requirements.txt
+RUN pip install -r requirements.txt
+
+ADD ./lr_cause_api.py /app
+ADD ./model/ /app
+
+ENV MODEL_NAME=lr_cause_model_undersampled
+
+EXPOSE 8000
+
+CMD ["python", "-m", "uvicorn", "lr_cause_api:app", "--host", "0.0.0.0", "--port", "8000"]

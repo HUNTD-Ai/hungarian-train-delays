@@ -4,17 +4,10 @@
 
 ## Backend
 
-** OpenAPI/swagger docs can be accessed if the server is running on /docs
+**OpenAPI/swagger docs can be accessed on the running servers**
 
-Install requirements for the backend (run from the backend dir):
+To run the backend locally execute the following command from the backend folder:
 
-``` bash
-pip install -r requirements.txt
+```bash
+docker-compose -f docker-compose.yaml up
 ```
-
-run the server (with hot reloading):
-
-``` bash
-python -m uvicorn app.app:app --host 127.0.0.1 --port 8888 --reload
-```
-

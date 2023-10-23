@@ -1,0 +1,16 @@
+services:
+  core-api:
+    image: ghcr.io/huntd-ai/core:0.0.1
+    networks:
+        - backend
+  delay-pred-api:
+    image: ghcr.io/huntd-ai/delay-pred:0.0.1-lda
+    networks:
+        - backend
+  cause-pred-api:
+    image: ghcr.io/huntd-ai/cause-pred:0.0.1-lr
+    networks:
+        - backend
+
+networks:
+  backend:

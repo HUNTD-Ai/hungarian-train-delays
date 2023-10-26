@@ -156,15 +156,15 @@ const DelayPredictionCard = () => {
     <>
       <div
         id="delay-prediction-card"
-        className="flex w-[512px] flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark">
+        className="z-2 flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px]">
         <div
           id="delay-prediction-card-header"
-          className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-12">
+          className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
           <span className="text-lg font-semibold">Delay prediction</span>
         </div>
         <div
           id="delay-prediction-form-container"
-          className="flex flex-col gap-y-6 px-16 py-9">
+          className="flex flex-col gap-y-3 px-4 py-5 sm:gap-y-6 sm:px-16 sm:py-9">
           <input
             name="from"
             id="from-input"
@@ -183,7 +183,7 @@ const DelayPredictionCard = () => {
             onChange={event => setTo(event.target.value)}
             className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
           />
-          <div className="flex w-full gap-x-6">
+          <div className="flex w-full flex-col gap-x-6 gap-y-3 sm:flex-row">
             <input
               name="date"
               id="date-input"
@@ -191,7 +191,7 @@ const DelayPredictionCard = () => {
               placeholder="Date"
               value={date}
               onChange={event => setDate(event.target.value)}
-              className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
+              className="h-12 w-[calc(100vw-4.5rem)] rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
             />
             <div
               id="train-selector-button"
@@ -241,27 +241,31 @@ const DelayPredictionCard = () => {
       </div>
       {popupVisible && (
         <div
-          id="train-selector-popup"
-          className="absolute left-1/2 top-24 z-10 flex h-[calc(100%-8rem)] w-[640px] -translate-x-1/2 flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark">
+          id="train-selector-popup-container"
+          className="absolute left-1/2 top-24 z-10 flex h-[80%] w-full -translate-x-1/2 px-4 sm:h-[calc(100%-8rem)] sm:w-[640px]">
           <div
-            id="train-selector-popup-header"
-            className="flex h-12 w-full flex-shrink-0 items-center justify-between rounded-t-[25px] bg-primaryColor px-4">
-            <span className="text-lg font-semibold">
-              Trains ({from} -{'>'} {to})
-            </span>
-            <img
-              src={CloseIcon}
-              alt="close popup"
-              onClick={() => setPopupVisible(false)}
+            id="train-selector-popup"
+            className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark ">
+            <div
+              id="train-selector-popup-header"
+              className="flex h-12 w-full flex-shrink-0 items-center justify-between rounded-t-[25px] bg-primaryColor px-4">
+              <span className="text-lg font-semibold">
+                Trains ({from} -{'>'} {to})
+              </span>
+              <img
+                src={CloseIcon}
+                alt="close popup"
+                onClick={() => setPopupVisible(false)}
+              />
+            </div>
+            <TrainList
+              trains={trains}
+              onSelectTrain={t => {
+                setTrain(t);
+                setPopupVisible(false);
+              }}
             />
           </div>
-          <TrainList
-            trains={trains}
-            onSelectTrain={t => {
-              setTrain(t);
-              setPopupVisible(false);
-            }}
-          />
         </div>
       )}
     </>

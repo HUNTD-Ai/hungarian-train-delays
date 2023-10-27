@@ -9,7 +9,7 @@ type Props = {
 
 const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden p-10">
+    <div className="flex h-full w-full flex-col overflow-hidden p-5 sm:p-10">
       <div
         id="train-list"
         className="h-full w-full overflow-y-auto text-textBoxTextColorLight dark:border-textBoxTextColorDark">

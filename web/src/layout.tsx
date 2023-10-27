@@ -5,7 +5,7 @@ const Layout = () => {
   return (
     <div
       id="layout"
-      className="flex h-screen w-screen flex-col">
+      className="flex h-[calc(100dvh)] w-screen flex-col">
       <Navbar />
       <Outlet />
     </div>

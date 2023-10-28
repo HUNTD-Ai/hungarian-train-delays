@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 type Props = {
-  icon: string;
+  icon: React.ReactNode;
   pageName: string;
   route: string;
 };
@@ -18,10 +18,7 @@ const NavbarItem: React.FC<Props> = ({ icon, pageName, route }) => {
       to={route}
       className={({ isActive }) => (isActive ? activeClass : inactiveClass)}>
       <div className="flex w-full flex-col items-center justify-center gap-x-2 sm:flex-row sm:justify-start">
-        <img
-          src={icon}
-          alt="page icon"
-        />
+        {icon}
         <span className="text-md cursor-pointer text-center font-semibold leading-tight text-textColor sm:text-lg">
           {pageName}
         </span>

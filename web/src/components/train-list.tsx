@@ -1,6 +1,5 @@
 import React from 'react';
-import TrainIcon from '../assets/icons/train.svg';
-import ArrowRightIcon from '../assets/icons/arrow-right.svg';
+import { TrainIcon, ArrowRightIcon } from './icons.tsx';
 
 type Props = {
   trains: Array<Train>;
@@ -12,7 +11,7 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
     <div className="flex h-full w-full flex-col overflow-hidden p-5 sm:p-10">
       <div
         id="train-list"
-        className="h-full w-full overflow-y-auto text-textBoxTextColorLight dark:border-textBoxTextColorDark">
+        className="h-full w-full overflow-y-auto text-textBoxTextColorLight dark:text-textColor">
         <div
           id="train-list-table-header"
           className="flex h-12 w-full items-center rounded-t-[10px] border border-textBoxTextColorLight bg-textBoxBackgroundLight dark:border-textBoxTextColorDark dark:bg-textBoxBackgroundDark">
@@ -38,10 +37,7 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
                 : 'flex h-12 w-full items-center border border-textBoxTextColorLight bg-textBoxBackgroundLight dark:border-textBoxTextColorDark dark:bg-textBoxBackgroundDark'
             }>
             <div className="flex h-full w-full items-center gap-x-2 pl-2">
-              <img
-                src={TrainIcon}
-                alt="service icon"
-              />
+              <TrainIcon className="text-textBoxTextColorLight dark:text-textColor" />
               <span>{train.trainNumber}</span>
             </div>
             <div className="flex h-full w-full items-center pl-2">
@@ -59,9 +55,8 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
               <span>
                 {train.travelTime.getHours()}:{train.travelTime.getMinutes()}h
               </span>
-              <img
-                src={ArrowRightIcon}
-                alt="select train"
+              <ArrowRightIcon
+                className="text-green-500"
                 onClick={() => onSelectTrain(train)}
               />
             </div>

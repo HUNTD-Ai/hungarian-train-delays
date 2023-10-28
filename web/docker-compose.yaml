@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  web:
+    container_name: HUNTD-Ai-Web
+    image: ghcr.io/huntd-ai/web:0.0.1
+    ports:
+      - "80:80"
+    networks:
+      web-network:
+
+networks:
+  web-network:

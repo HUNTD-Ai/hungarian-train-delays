@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import UnfoldMoreIcon from '../assets/icons/unfold-more.svg';
-import CloseIcon from '../assets/icons/close.svg';
 import TrainList from './train-list.tsx';
-import { TrainIcon } from './icons.tsx';
+import { CloseIcon, TrainIcon, UnfoldMoreIcon } from './icons.tsx';
 
 const DelayPredictionCard = () => {
   const [from, setFrom] = useState<string>('Budapest');
@@ -207,17 +205,14 @@ const DelayPredictionCard = () => {
               }
               onClick={() => setPopupVisible(true)}>
               {train != null && (
-                <div className="flex items-center gap-x-2">
-                  <TrainIcon className="text-textBoxTextColorLight dark:text-textColor" />
+                <div className="flex items-center gap-x-2 text-textBoxTextColorLight dark:text-textColor">
+                  <TrainIcon />
                   <span className="text-xl">{train.trainNumber}</span>
                 </div>
               )}
               {train == null && <span className="text-xl">Train</span>}
               <div className="w-full" />
-              <img
-                src={UnfoldMoreIcon}
-                alt="open train selector icon"
-              />
+              <UnfoldMoreIcon className="text-textBoxTextColorLight dark:text-textColor" />
             </div>
           </div>
           <button
@@ -249,11 +244,7 @@ const DelayPredictionCard = () => {
               <span className="text-lg font-semibold">
                 Trains ({from} -{'>'} {to})
               </span>
-              <img
-                src={CloseIcon}
-                alt="close popup"
-                onClick={() => setPopupVisible(false)}
-              />
+              <CloseIcon onClick={() => setPopupVisible(false)} />
             </div>
             <TrainList
               trains={trains}

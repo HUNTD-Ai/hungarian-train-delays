@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
 
 type Props = {
-  icon: string;
+  icon: ReactNode;
   pageName: string;
   route: string;
   onClick: () => void;
@@ -25,10 +25,7 @@ const DrawerMenuItem: React.FC<Props> = ({
       className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
       onClick={() => onClick()}>
       <div className="flex h-full w-full items-center justify-start gap-x-4">
-        <img
-          src={icon}
-          alt="page icon"
-        />
+        {icon}
         <span className="text-md cursor-pointer text-center font-semibold leading-tight text-textColor">
           {pageName}
         </span>

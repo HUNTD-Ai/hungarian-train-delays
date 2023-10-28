@@ -1,12 +1,14 @@
 import Logo from './logo.tsx';
 import NavbarItem from './navbar-item.tsx';
-import ScheduleIcon from '../assets/icons/schedule.svg';
-import BarChartIcon from '../assets/icons/bar-chart.svg';
-import SmartToyIcon from '../assets/icons/smart-toy.svg';
-import HamburgerMenuIcon from '../assets/icons/menu.svg';
-import CloseIcon from '../assets/icons/close.svg';
 import { useState } from 'react';
 import DrawerMenuItem from './drawer-menu-item.tsx';
+import {
+  BarChartIcon,
+  MenuIcon,
+  ScheduleIcon,
+  SmartToyIcon,
+  CloseIcon,
+} from './icons.tsx';
 
 const Navbar = () => {
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
@@ -19,26 +21,24 @@ const Navbar = () => {
       <div
         id="navbar"
         className="flex h-16 w-full items-center justify-start bg-primaryColor">
-        <img
-          src={HamburgerMenuIcon}
-          alt="hamburger-menu"
-          className="pl-4 sm:hidden"
+        <MenuIcon
+          className="pl-4 text-textColor sm:hidden"
           onClick={openMenu}
         />
         <Logo />
         <div className="hidden h-16 sm:flex">
           <NavbarItem
-            icon={ScheduleIcon}
+            icon={<ScheduleIcon className="text-textColor" />}
             pageName="Delay prediction"
             route="/"
           />
           <NavbarItem
-            icon={BarChartIcon}
+            icon={<BarChartIcon className="text-textColor" />}
             pageName="Statistics"
             route="statistics"
           />
           <NavbarItem
-            icon={SmartToyIcon}
+            icon={<SmartToyIcon className="text-textColor" />}
             pageName="Model"
             route="model"
           />
@@ -53,26 +53,25 @@ const Navbar = () => {
             className="absolute left-0 top-0 h-full w-64 bg-primaryColor drop-shadow-md">
             <div className="flex h-16 w-full items-center justify-between px-4">
               <Logo />
-              <img
-                src={CloseIcon}
-                alt="close drawer menu"
+              <CloseIcon
                 onClick={closeMenu}
+                className="text-textColor"
               />
             </div>
             <DrawerMenuItem
-              icon={ScheduleIcon}
+              icon={<ScheduleIcon className="text-textColor" />}
               pageName="Delay prediction"
               route="/"
               onClick={closeMenu}
             />
             <DrawerMenuItem
-              icon={BarChartIcon}
+              icon={<BarChartIcon className="text-textColor" />}
               pageName="Statistics"
               route="statistics"
               onClick={closeMenu}
             />
             <DrawerMenuItem
-              icon={SmartToyIcon}
+              icon={<SmartToyIcon className="text-textColor" />}
               pageName="Model"
               route="model"
               onClick={closeMenu}

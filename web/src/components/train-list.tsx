@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrainIcon, ArrowRightIcon } from './icons.tsx';
+import { Train } from '../models/models.ts';
 
 type Props = {
   trains: Array<Train>;

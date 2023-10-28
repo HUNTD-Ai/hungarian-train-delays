@@ -11,6 +11,9 @@ import DrawerMenuItem from './drawer-menu-item.tsx';
 const Navbar = () => {
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
 
+  const openMenu = () => setMenuIsOpen(true);
+  const closeMenu = () => setMenuIsOpen(false);
+
   return (
     <>
       <div
@@ -20,7 +23,7 @@ const Navbar = () => {
           src={HamburgerMenuIcon}
           alt="hamburger-menu"
           className="pl-4 sm:hidden"
-          onClick={() => setMenuIsOpen(true)}
+          onClick={openMenu}
         />
         <Logo />
         <div className="hidden h-16 sm:flex">
@@ -43,31 +46,38 @@ const Navbar = () => {
       </div>
       {menuIsOpen && (
         <div
-          id="drawer-menu"
-          className="absolute left-0 top-0 z-10 h-full w-64 bg-primaryColor drop-shadow-md">
-          <div className="flex h-16 w-full items-center justify-between px-4">
-            <Logo />
-            <img
-              src={CloseIcon}
-              alt="close drawer menu"
-              onClick={() => setMenuIsOpen(false)}
+          id="drawer-menu-overlay"
+          className="absolute z-10 h-full w-full bg-gray-800 bg-opacity-50">
+          <div
+            id="drawer-menu"
+            className="absolute left-0 top-0 h-full w-64 bg-primaryColor drop-shadow-md">
+            <div className="flex h-16 w-full items-center justify-between px-4">
+              <Logo />
+              <img
+                src={CloseIcon}
+                alt="close drawer menu"
+                onClick={closeMenu}
+              />
+            </div>
+            <DrawerMenuItem
+              icon={ScheduleIcon}
+              pageName="Delay prediction"
+              route="/"
+              onClick={closeMenu}
+            />
+            <DrawerMenuItem
+              icon={BarChartIcon}
+              pageName="Statistics"
+              route="statistics"
+              onClick={closeMenu}
+            />
+            <DrawerMenuItem
+              icon={SmartToyIcon}
+              pageName="Model"
+              route="model"
+              onClick={closeMenu}
             />
           </div>
-          <DrawerMenuItem
-            icon={ScheduleIcon}
-            pageName="Delay prediction"
-            route="/"
-          />
-          <DrawerMenuItem
-            icon={BarChartIcon}
-            pageName="Statistics"
-            route="statistics"
-          />
-          <DrawerMenuItem
-            icon={SmartToyIcon}
-            pageName="Model"
-            route="model"
-          />
         </div>
       )}
     </>

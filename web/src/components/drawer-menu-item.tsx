@@ -5,9 +5,15 @@ type Props = {
   icon: string;
   pageName: string;
   route: string;
+  onClick: () => void;
 };
 
-const DrawerMenuItem: React.FC<Props> = ({ icon, pageName, route }) => {
+const DrawerMenuItem: React.FC<Props> = ({
+  icon,
+  pageName,
+  route,
+  onClick,
+}) => {
   const activeClass =
     'flex h-16 w-full items-center gap-y-2 bg-primaryColorHover px-4';
   const inactiveClass =
@@ -16,7 +22,8 @@ const DrawerMenuItem: React.FC<Props> = ({ icon, pageName, route }) => {
   return (
     <NavLink
       to={route}
-      className={({ isActive }) => (isActive ? activeClass : inactiveClass)}>
+      className={({ isActive }) => (isActive ? activeClass : inactiveClass)}
+      onClick={() => onClick()}>
       <div className="flex h-full w-full items-center justify-start gap-x-4">
         <img
           src={icon}

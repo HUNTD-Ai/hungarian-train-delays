@@ -11,3 +11,14 @@ export type PredictionResult = {
   score: number;
   delay: number;
 };
+
+export type TrainDelayRequest = {
+  route: string;
+  train_number: string;
+  depart_time: string;
+};
+
+export type TrainDelayResponse = {
+  label: string;
+  score: number;
+};

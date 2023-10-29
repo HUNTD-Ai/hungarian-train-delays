@@ -7,16 +7,21 @@ import {
   redResultTextStyle,
   yellowResultTextStyle,
 } from '../constants/text-constants.ts';
+import { TrainDelayApi } from '../apis/train-delay-api.ts';
 
 const DelayPredictionCard = () => {
   const [from, setFrom] = useState<string>('');
   const [to, setTo] = useState<string>('');
   const [date, setDate] = useState<string>('');
 
+  // TODO move to upper component with result card
   const [result, setResult] = useState<PredictionResult | null>(null);
 
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [train, setTrain] = useState<Train | null>(null);
+
+  // TODO loading icon and maybe darker background-overlay
+  const [, setLoading] = useState<boolean>(false);
 
   const trains = [
     {
@@ -214,7 +219,7 @@ const DelayPredictionCard = () => {
                       to == null ||
                       to === '' ||
                       date == null ||
-                      date
+                      date === ''
                     )
                   ) {
                     setPopupVisible(true);
@@ -249,13 +254,30 @@ const DelayPredictionCard = () => {
                 train == null
               }
               className="h-12 w-full rounded-[10px] bg-primaryColor text-2xl font-bold hover:bg-primaryColorHover disabled:bg-opacity-[42%] disabled:text-opacity-[42%] hover:disabled:bg-primaryColor hover:disabled:bg-opacity-[42%]"
-              onClick={() =>
+              onClick={async () => {
+                setLoading(true);
+
+                const [probability, delayCause] = await Promise.all([
+                  TrainDelayApi.predictDelayProbability(
+                    from,
+                    to,
+                    train!.trainNumber,
+                    new Date(date),
+                  ),
+                  TrainDelayApi.predictDelayCause(
+                    from,
+                    to,
+                    train!.trainNumber,
+                    new Date(date),
+                  ),
+                ]);
                 setResult({
-                  label: 'Vonat műszaki hibája miatti késés',
-                  score: 0.2125,
+                  label: delayCause,
+                  score: probability,
                   delay: 6.4 * 60 * 1000,
-                })
-              }>
+                });
+                setLoading(false);
+              }}>
               I'm feeling lucky
             </button>
           </div>

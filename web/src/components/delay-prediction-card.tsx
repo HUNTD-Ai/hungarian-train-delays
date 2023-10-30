@@ -1,20 +1,25 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import TrainList from './train-list.tsx';
 import { CloseIcon, TrainIcon, UnfoldMoreIcon } from './icons.tsx';
+import { Train } from '../models/models.ts';
 
-const DelayPredictionCard = () => {
-  const [from, setFrom] = useState<string>('Budapest');
-  const [to, setTo] = useState<string>('Debrecen');
+type Props = {
+  onSubmit: (from: string, to: string, trainNumber: string, date: Date) => void;
+};
+
+const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
+  const [from, setFrom] = useState<string>('');
+  const [to, setTo] = useState<string>('');
   const [date, setDate] = useState<string>('');
 
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
-  const [train, setTrain] = useState<Train | null>({
-    trainNumber: '6020',
-    serviceName: 'MÁV',
-    departureTime: new Date('02:38'),
-    arrivalTime: new Date('05:52'),
-    travelTime: new Date('3:15'),
-  });
+  const [train, setTrain] = useState<Train | null>(null);
+
+  const submitPredictionInputs = () => {
+    if (from != null && to != null && train != null && date != null) {
+      onSubmit(from, to, train?.trainNumber, new Date(date));
+    }
+  };
 
   const trains = [
     {
@@ -203,14 +208,33 @@ const DelayPredictionCard = () => {
                   ? disabledTrainSelectorStyle
                   : trainSelectorStyle
               }
-              onClick={() => setPopupVisible(true)}>
+              onClick={() => {
+                if (
+                  !(
+                    from == null ||
+                    from === '' ||
+                    to == null ||
+                    to === '' ||
+                    date == null ||
+                    date === ''
+                  )
+                ) {
+                  setPopupVisible(true);
+                }
+              }}>
               {train != null && (
                 <div className="flex items-center gap-x-2 text-textBoxTextColorLight dark:text-textColor">
                   <TrainIcon />
-                  <span className="text-xl">{train.trainNumber}</span>
+                  <span className="text-xl text-textBoxTextColorLight dark:text-textColor">
+                    {train.trainNumber}
+                  </span>
                 </div>
               )}
-              {train == null && <span className="text-xl">Train</span>}
+              {train == null && (
+                <span className="text-xl text-textBoxTextColorLight dark:text-textColor">
+                  Train
+                </span>
+              )}
               <div className="w-full" />
               <UnfoldMoreIcon className="text-textBoxTextColorLight dark:text-textColor" />
             </div>
@@ -226,7 +250,8 @@ const DelayPredictionCard = () => {
               date === '' ||
               train == null
             }
-            className="h-12 w-full rounded-[10px] bg-primaryColor text-2xl font-bold hover:bg-primaryColorHover disabled:bg-opacity-[42%] disabled:text-opacity-[42%] hover:disabled:bg-primaryColor hover:disabled:bg-opacity-[42%]">
+            className="h-12 w-full rounded-[10px] bg-primaryColor text-2xl font-bold hover:bg-primaryColorHover disabled:bg-opacity-[42%] disabled:text-opacity-[42%] hover:disabled:bg-primaryColor hover:disabled:bg-opacity-[42%]"
+            onClick={() => submitPredictionInputs()}>
             I'm feeling lucky
           </button>
         </div>

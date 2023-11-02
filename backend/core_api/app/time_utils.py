@@ -6,8 +6,11 @@ def current_timestamp_utc() -> int:
     return int(dt.datetime.now(dt.timezone.utc).timestamp())
 
 
-def datetime_to_utc_timestamp(datetime: dt.datetime) -> int:
-    return int(datetime.astimezone(dt.timezone.utc).timestamp())
+def datetime_to_utc_timestamp(datetime: dt.datetime, return_ms=False) -> int:
+    ts = int(datetime.astimezone(dt.timezone.utc).timestamp())
+    if return_ms:
+        ts *= 1000
+    return ts
 
 
 def now() -> dt.datetime:

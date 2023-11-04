@@ -1,8 +1,16 @@
 services:
   core-api:
-    image: ghcr.io/huntd-ai/core:0.0.1
+    image: ghcr.io/huntd-ai/core:0.0.2
     networks:
         - backend
+    environment:
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_DB: ${DB_DB}
+        DB_USER: ${DB_USER}
+        DB_PW: ${DB_PW}
+        # 1 or 0
+        MAIN_REPLICA: ${MAIN_REPLICA}
   delay-pred-api:
     image: ghcr.io/huntd-ai/delay-pred:0.0.1-lda
     networks:

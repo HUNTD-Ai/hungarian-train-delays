@@ -1,3 +1,4 @@
+import datetime as dt
 from typing import Optional, List
 from pydantic import BaseModel
 
@@ -25,8 +26,19 @@ class TimestampedDelays(BaseModel):
 
 class RouteDelayRequest(BaseModel):
     route: str
+    startTimestamp: dt.datetime
+    endTimestamp: dt.datetime
 
 
 class RouteDelayResponse(BaseModel):
     route: str
     delays: TimestampedDelays
+
+
+class HighestDelayRequest(BaseModel):
+    startTimestamp: dt.datetime
+    endTimestamp: dt.datetime
+
+
+class RoutesResponse(BaseModel):
+    routes: List[str]

@@ -1,40 +1,34 @@
-import sqlite3
-import os
+import asyncpg
 
-from typing import Callable, List
+from contextlib import asynccontextmanager
+from typing import Awaitable, Callable, List
 
 from .logger import get_logger
 
 logger = get_logger(__name__)
 
-# everything here is boilerplate sqlite stuff
-# will be changed to postgres later
-# might be useful for testing
-
-_DB_PATH = os.path.abspath('data/data.sqlite')
+_DB_POOL = None
 
 
-def dict_factory(cursor, row):
-    d = {}
-    for idx, col in enumerate(cursor.description):
-        d[col[0]] = row[idx]
-    return d
+async def init(
+    config: dict,
+    repo_initializers: List[Callable[[asyncpg.Connection], Awaitable[None]]],
+):
+    global _DB_POOL
+    if _DB_POOL is None:
+        _DB_POOL = await asyncpg.create_pool(**config)
+    async with get_connection() as conn:
+        for initializer in repo_initializers:
+            await initializer(conn)
 
 
-def configure_db(path: str) -> None:
-    _DB_PATH = path
-
-
-def init(repo_initializers: List[Callable[[sqlite3.Connection], None]]):
-    conn = get_connection()
-    for initializer in repo_initializers:
-        initializer(conn)
-
-
-def get_connection() -> sqlite3.Connection:
-    conn = sqlite3.connect(_DB_PATH)
-    conn.row_factory = dict_factory
-    conn.execute('PRAGMA journal_mode=WAL;')
-    conn.execute('PRAGMA foreign_keys=ON;')
-    logger.info(f'initialized connection to db {_DB_PATH}')
-    return conn
+@asynccontextmanager
+async def get_connection():
+    global _DB_POOL
+    if _DB_POOL is None:
+        raise NameError('The module was not initialized')
+    conn = await _DB_POOL.acquire()
+    try:
+        yield conn
+    finally:
+        await _DB_POOL.release(conn)

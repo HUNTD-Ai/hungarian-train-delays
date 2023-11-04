@@ -111,13 +111,13 @@ async def get_monthly_mean_route_delays(
     ]
 
 
-async def get_routes(conn) -> List[str]:
+async def get_routes(conn: asyncpg.Connection) -> List[str]:
     return [
         rec.get('route')
         for rec in await conn.fetch(
             """
-    SELECT DISTINCT route FROM monthly_mean_route_delays;
-    """
+            SELECT DISTINCT route FROM monthly_mean_route_delays;
+            """
         )
     ]
 

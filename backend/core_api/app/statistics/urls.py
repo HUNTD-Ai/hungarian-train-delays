@@ -1,9 +1,8 @@
-import datetime as dt
-
-from fastapi import APIRouter
-from app import time_utils
+from fastapi import APIRouter, HTTPException, status
 
 import app.statistics.repo as repo
+import app.network_utils as network
+import app.statistics.mav_api as mav_api
 
 from app.logger import get_logger
 from app.db_utils import get_connection
@@ -29,12 +28,21 @@ statRouter = APIRouter(
 async def get_live_train_data(
     trainRequest: LiveTrainDataRequest,
 ) -> LiveTrainDataResponse:
-    # TODO fetch this data from MAV's api
+    train_data = await mav_api.get_train_data(
+        network.get_session(),
+        trainRequest.route,
+        trainRequest.trainNumber,
+    )
+    if train_data is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail='Could not find train with supplied data',
+        )
     return LiveTrainDataResponse(
         route=trainRequest.route,
         trainNumber=trainRequest.trainNumber,
-        delay=5.6,
-        delayCause='Train too old',
+        delay=train_data.delay,
+        delayCause=train_data.delay_cause,
     )
 
 

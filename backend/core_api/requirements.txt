@@ -1,2 +1,4 @@
 fastapi[all]
 asyncpg
+aiohttp
+bs4

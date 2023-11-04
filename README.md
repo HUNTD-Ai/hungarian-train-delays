@@ -9,5 +9,5 @@
 To run the backend locally execute the following command from the backend folder:
 
 ```bash
-docker-compose -f docker-compose.yaml up
+docker-compose -f docker-compose.yaml up -d --env-file <your .env file location>
 ```

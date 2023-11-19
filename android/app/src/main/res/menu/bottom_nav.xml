@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/prediction_nav_graph"
+        android:icon="@drawable/ic_clock"
+        android:title="@string/title_prediction" />
+    <item
+        android:id="@+id/stats_nav_graph"
+        android:icon="@drawable/ic_chart"
+        android:title="@string/title_stats" />
+    <item
+        android:id="@+id/about_nav_graph"
+        android:icon="@drawable/ic_robot"
+        android:title="@string/title_about" />
+</menu>

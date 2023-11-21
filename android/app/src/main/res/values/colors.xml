@@ -2,4 +2,19 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="darkmode_text">#F9FAFB</color>
+    <color name="darkmode_textbox">#525F61</color>
+
+    <color name="lightmode_text">#111827</color>
+    <color name="lightmode_textbox">#D9D9D9</color>
+
+    <color name="primary">#6665DD</color>
+    <color name="primary_hover">#4D4BE2</color>
+
+    <color name="darkmode_card_bg">#3E4849</color>
+    <color name="lightmode_card_bg">#FFFFFFFF</color>
+
+    <color name="darkmode_bg">#293132</color>
+    <color name="lightmode_bg">#EFF6FF</color>
 </resources>

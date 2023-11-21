@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
@@ -29,6 +30,7 @@ class MonthlyMeanFragment : Fragment() {
     ): View? {
         val binding = FragmentMonthlyMeanBinding.inflate(layoutInflater)
         chart = binding.chart
+        setupChart()
         return binding.root
     }
 
@@ -71,6 +73,20 @@ class MonthlyMeanFragment : Fragment() {
         chart.data = data
         chart.invalidate()
     }
+
+    private fun setupChart(){
+        chart.setDrawGridBackground(false);
+        chart.setDrawBarShadow(false)
+        chart.setDrawBorders(false)
+
+        val description =  Description()
+        description.isEnabled = false
+        chart.description = description
+
+        chart.animateY(1000);
+        chart.animateX(1000);
+    }
+
 
     /*barChart.setDrawGridBackground(false);
     //remove the bar shadow, default false if not set

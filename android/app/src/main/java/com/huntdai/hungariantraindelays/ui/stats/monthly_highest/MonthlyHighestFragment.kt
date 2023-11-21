@@ -1,4 +1,4 @@
-package com.huntdai.hungariantraindelays.ui.stats.monthly_sum
+package com.huntdai.hungariantraindelays.ui.stats.monthly_highest
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MonthlySumFragment.newInstance] factory method to
+ * Use the [MonthlyHighestFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MonthlySumFragment : Fragment() {
+class MonthlyHighestFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class MonthlySumFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monthly_sum, container, false)
+        return inflater.inflate(R.layout.fragment_monthly_highest, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class MonthlySumFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment MonthlySumFragment.
+         * @return A new instance of fragment MonthlyHighestFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            MonthlySumFragment().apply {
+            MonthlyHighestFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

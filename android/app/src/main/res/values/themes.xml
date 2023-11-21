@@ -3,6 +3,11 @@
     <style name="Base.Theme.HungarianTrainDelays" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryVariant">@color/primary_hover</item>
+
+        <item name="android:textColor">@color/lightmode_text</item>
+        <item name="android:colorBackground">@color/lightmode_bg</item>
     </style>
 
     <style name="Theme.HungarianTrainDelays" parent="Base.Theme.HungarianTrainDelays" />

@@ -19,7 +19,9 @@ import kotlinx.coroutines.launch
 class StatsFragment : Fragment() {
 
     private lateinit var meanButton: Button
-    private lateinit var sumButton: Button
+    private lateinit var totalButton: Button
+    private lateinit var highestButton: Button
+    private lateinit var meanPerRouteButton: Button
 
     private val viewModel: StatsViewModel by viewModels()
 
@@ -29,7 +31,9 @@ class StatsFragment : Fragment() {
     ): View? {
         val binding = FragmentStatsBinding.inflate(layoutInflater)
         meanButton = binding.meanButton
-        sumButton = binding.sumButton
+        totalButton = binding.totalButton
+        highestButton= binding.highestButton
+        meanPerRouteButton = binding.meanPerRouteButton
         return binding.root
     }
 
@@ -40,7 +44,7 @@ class StatsFragment : Fragment() {
             findNavController().navigate(R.id.action_statsFragment_to_monthlyMeanFragment)
         }
 
-        sumButton.setOnClickListener {
+        totalButton.setOnClickListener {
             findNavController().navigate(R.id.action_statsFragment_to_monthlySumFragment)
         }
 

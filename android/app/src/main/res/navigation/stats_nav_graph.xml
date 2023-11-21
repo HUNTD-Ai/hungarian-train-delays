@@ -9,5 +9,22 @@
         android:id="@+id/statsFragment"
         android:name="com.huntdai.hungariantraindelays.ui.stats.StatsFragment"
         android:label="fragment_stats"
-        tools:layout="@layout/fragment_stats" />
+        tools:layout="@layout/fragment_stats" >
+        <action
+            android:id="@+id/action_statsFragment_to_monthlyMeanFragment"
+            app:destination="@id/monthlyMeanFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_monthlySumFragment"
+            app:destination="@id/monthlySumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/monthlyMeanFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.stats.monthly_mean.MonthlyMeanFragment"
+        android:label="fragment_monthly_mean"
+        tools:layout="@layout/fragment_monthly_mean" />
+    <fragment
+        android:id="@+id/monthlySumFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.stats.monthly_sum.MonthlySumFragment"
+        android:label="fragment_monthly_sum"
+        tools:layout="@layout/fragment_monthly_sum" />
 </navigation>

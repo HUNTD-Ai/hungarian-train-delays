@@ -72,4 +72,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+
+    implementation("androidx.cardview:cardview:1.0.0")
+
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
 }

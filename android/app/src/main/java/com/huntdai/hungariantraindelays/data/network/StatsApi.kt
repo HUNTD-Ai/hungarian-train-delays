@@ -1,9 +1,10 @@
 package com.huntdai.hungariantraindelays.data.network
 
-import com.huntdai.hungariantraindelays.data.network.model.RoutesResponse
+import com.huntdai.hungariantraindelays.data.network.models.MonthlyMeanDelayResponse
+import com.huntdai.hungariantraindelays.data.network.models.MonthlySumDelayResponse
+import com.huntdai.hungariantraindelays.data.network.models.RoutesResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface StatsApi {
     companion object {
@@ -12,4 +13,14 @@ interface StatsApi {
 
     @GET("routes")
     suspend fun getRoutes(): Response<RoutesResponse>
+
+    @GET("monthly-mean")
+    suspend fun getMonthlyMeanDelay(): Response<MonthlyMeanDelayResponse>
+
+    @GET("monthly-sum")
+    suspend fun getMonthlySumDelay(): Response<MonthlySumDelayResponse>
+
+    //suspend fun getMonthlyHighestDelay(): Response<RoutesResponse>
+
+    //suspend fun getMeanRouteDelay(): Response<RoutesResponse>
 }

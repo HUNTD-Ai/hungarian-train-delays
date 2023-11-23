@@ -39,8 +39,8 @@ const Navbar = () => {
           />
           <NavbarItem
             icon={<SmartToyIcon className="text-textColor" />}
-            pageName="Model"
-            route="model"
+            pageName="About"
+            route="about"
           />
         </div>
       </div>
@@ -72,8 +72,8 @@ const Navbar = () => {
             />
             <DrawerMenuItem
               icon={<SmartToyIcon className="text-textColor" />}
-              pageName="Model"
-              route="model"
+              pageName="About"
+              route="about"
               onClick={closeMenu}
             />
           </div>

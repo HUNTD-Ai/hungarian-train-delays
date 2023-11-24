@@ -55,7 +55,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi){
             }
         }
 
-    suspend fun getMonthlySumDelay(): DataSourceResponse<List<Delay>> =
+    suspend fun getMonthlyTotalDelay(): DataSourceResponse<List<Delay>> =
         withContext(Dispatchers.IO) {
             try {
                 val response = statsApi.getMonthlySumDelay()

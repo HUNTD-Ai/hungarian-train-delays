@@ -26,5 +26,5 @@
         android:id="@+id/monthlySumFragment"
         android:name="com.huntdai.hungariantraindelays.ui.stats.monthly_total.MonthlyTotalFragment"
         android:label="fragment_monthly_sum"
-        tools:layout="@layout/fragment_monthly_sum" />
+        tools:layout="@layout/fragment_monthly_total" />
 </navigation>

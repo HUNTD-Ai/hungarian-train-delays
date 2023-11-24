@@ -5,56 +5,135 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.huntdai.hungariantraindelays.R
+import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.databinding.FragmentMonthlyMeanBinding
+import com.huntdai.hungariantraindelays.databinding.FragmentMonthlyTotalBinding
+import com.huntdai.hungariantraindelays.ui.stats.monthly_mean.MonthlyMeanUIState
+import com.huntdai.hungariantraindelays.ui.stats.monthly_mean.MonthlyMeanViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MonthlyTotalFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class MonthlyTotalFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val viewModel: MonthlyTotalViewModel by viewModels()
+    private lateinit var chart : BarChart
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monthly_sum, container, false)
+        val binding = FragmentMonthlyTotalBinding.inflate(layoutInflater)
+        chart = binding.chart
+        setupChart()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MonthlySumFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MonthlyTotalFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
+            viewModel.uiState.collect {
+                render(it)
             }
+        }
+        viewModel.initUiState()
     }
+
+    private fun render(uiState: MonthlyTotalUIState) {
+        when (uiState) {
+            is MonthlyTotalUIState.Initial -> {}
+            is MonthlyTotalUIState.Loaded -> {
+                populateChart(uiState.delays)
+            }
+            is MonthlyTotalUIState.Loading -> {}
+            is MonthlyTotalUIState.Error -> {}
+        }
+    }
+
+    private fun populateChart(delays: List<Delay>){
+        val entries = ArrayList<BarEntry>()
+        val title = "Title"
+
+        for (i in delays.indices) {
+            val barEntry = delays[i].delay?.let { BarEntry(i.toFloat(), it.toFloat()) }
+            if (barEntry != null) {
+                entries.add(barEntry)
+            }
+        }
+
+        val barDataSet = BarDataSet(entries, title)
+
+        val data = BarData(barDataSet)
+        chart.data = data
+        chart.invalidate()
+    }
+
+    private fun setupChart(){
+        chart.setDrawGridBackground(false);
+        chart.setDrawBarShadow(false)
+        chart.setDrawBorders(false)
+
+        val description =  Description()
+        description.isEnabled = false
+        chart.description = description
+
+        chart.animateY(1000);
+        chart.animateX(1000);
+    }
+
+
+    /*barChart.setDrawGridBackground(false);
+    //remove the bar shadow, default false if not set
+    barChart.setDrawBarShadow(false);
+    //remove border of the chart, default false if not set
+    barChart.setDrawBorders(false);
+
+    //remove the description label text located at the lower right corner
+    Description description = new Description();
+    description.setEnabled(false);
+    barChart.setDescription(description);
+
+    //setting animation for y-axis, the bar will pop up from 0 to its value within the time we set
+    barChart.animateY(1000);
+    //setting animation for x-axis, the bar will pop up separately within the time we set
+    barChart.animateX(1000);
+
+    XAxis xAxis = barChart.getXAxis();
+    //change the position of x-axis to the bottom
+    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+    //set the horizontal distance of the grid line
+    xAxis.setGranularity(1f);
+    //hiding the x-axis line, default true if not set
+    xAxis.setDrawAxisLine(false);
+    //hiding the vertical grid lines, default true if not set
+    xAxis.setDrawGridLines(false);
+
+    YAxis leftAxis = barChart.getAxisLeft();
+    //hiding the left y-axis line, default true if not set
+    leftAxis.setDrawAxisLine(false);
+
+    YAxis rightAxis = barChart.getAxisRight();
+    //hiding the right y-axis line, default true if not set
+    rightAxis.setDrawAxisLine(false);
+
+    Legend legend = barChart.getLegend();
+    //setting the shape of the legend form to line, default square shape
+    legend.setForm(Legend.LegendForm.LINE);
+    //setting the text size of the legend
+    legend.setTextSize(11f);
+    //setting the alignment of legend toward the chart
+    legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+    legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+    //setting the stacking direction of legend
+    legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+    //setting the location of legend outside the chart, default false if not set
+    legend.setDrawInside(false);*/
 }

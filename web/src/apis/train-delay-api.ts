@@ -2,14 +2,17 @@ import ApiConstants from './api-constants.ts';
 import {
   Route,
   RoutesResponse,
-  TrainDelayRequest,
-  TrainDelayResponse,
+  TimetableResponse,
+  Train,
+  PredictionRequest,
+  PredictionResponse,
+  LiveDataResponse,
 } from '../models/models.ts';
 
 export const TrainDelayApi = {
   getRoutes: async (): Promise<Array<Route>> => {
     try {
-      const response: Response = await fetch(
+      const response = await fetch(
         ApiConstants.CORE_BASE_URL + '/stats/routes',
       );
       const routesResponse: RoutesResponse = await response.json();
@@ -25,44 +28,103 @@ export const TrainDelayApi = {
       return [];
     }
   },
-  predictDelayProbability: async (
-    from: string,
-    to: string,
+  getTimetable: async (
+    route: string,
+    date: string,
+  ): Promise<TimetableResponse | null> => {
+    try {
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/timetable',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            route: route,
+            depart_date: date,
+          }),
+        },
+      );
+
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
+  },
+  getLiveData: async (
+    route: string,
     trainNumber: string,
-    date: Date,
-  ): Promise<number> => {
-    const input: TrainDelayRequest = {
-      route: from + ' - ' + to,
-      train_number: trainNumber,
-      depart_time: `${
-        date.toISOString().split('T')[0]
-      } ${date.getHours()}:${date.getMinutes()}`,
-    };
-    const response = await fetch(ApiConstants.DelayProbabilityApiUrl, {
-      body: JSON.stringify(input),
-      method: 'POST',
-    });
-    const { score } = (await response.json()) as TrainDelayResponse;
-    return score;
+  ): Promise<LiveDataResponse | null> => {
+    try {
+      const response = await fetch(ApiConstants.CORE_BASE_URL + '/stats/live', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          route: route,
+          trainNumber: trainNumber,
+        }),
+      });
+
+      if (!response.ok) {
+        return null;
+      }
+
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
+  },
+  predictDelayProbability: async (
+    train: Train,
+    date: string,
+  ): Promise<PredictionResponse | null> => {
+    try {
+      const input: PredictionRequest = {
+        route: train.route,
+        train_number: train.trainNumber,
+        depart_time: date + 'T' + train.departureTime,
+      };
+      const response = await fetch(
+        ApiConstants.DELAY_PREDICTION_BASE_URL + '/predict',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(input),
+        },
+      );
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   },
   predictDelayCause: async (
-    from: string,
-    to: string,
-    trainNumber: string,
-    date: Date,
-  ): Promise<string> => {
-    const input: TrainDelayRequest = {
-      route: from + ' - ' + to,
-      train_number: trainNumber,
-      depart_time: `${
-        date.toISOString().split('T')[0]
-      } ${date.getHours()}:${date.getMinutes()}`,
-    };
-    const response = await fetch(ApiConstants.DelayCauseApiUrl, {
-      body: JSON.stringify(input),
-      method: 'POST',
-    });
-    const { label } = (await response.json()) as TrainDelayResponse;
-    return label;
+    train: Train,
+    date: string,
+  ): Promise<PredictionResponse | null> => {
+    try {
+      const input: PredictionRequest = {
+        route: train.route,
+        train_number: train.trainNumber,
+        depart_time: date + 'T' + train.departureTime,
+      };
+      const response = await fetch(
+        ApiConstants.DELAY_CAUSE_PREDICTION_BASE_URL + '/predict',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(input),
+        },
+      );
+      return await response.json();
+    } catch (e) {
+      return null;
+    }
   },
 };

@@ -3,4 +3,4 @@ export const greenResultTextStyle =
 export const yellowResultTextStyle =
   'text-lg sm:text-2xl font-semibold text-yellow-500';
 export const redResultTextStyle =
-  'text-lg sm:text-2xl font-semibold text-rd-500';
+  'text-lg sm:text-2xl font-semibold text-red-500';

@@ -1,9 +1,15 @@
 import DelayPredictionCard from '../components/delay-prediction-card.tsx';
 import { useEffect, useState } from 'react';
-import { PredictionResult, Route } from '../models/models.ts';
+import {
+  PredictionResponse,
+  PredictionResult,
+  Route,
+  Train,
+} from '../models/models.ts';
 import PredictionResultCard from '../components/prediction-result-card.tsx';
 import { TrainDelayApi } from '../apis/train-delay-api.ts';
 import LoadingSpinner from '../components/loading-spinner.tsx';
+import TrainDataCard from '../components/train-data-card.tsx';
 
 const HomePage = () => {
   const [routes, setRoutes] = useState<Array<Route>>([]);
@@ -14,48 +20,51 @@ const HomePage = () => {
     const fetchRoutes = async () => {
       const routes = await TrainDelayApi.getRoutes();
       setRoutes(routes);
-      console.log('routes', routes);
     };
 
     fetchRoutes();
   }, []);
 
-  const onSubmit = (
-    from: string,
-    to: string,
-    trainNumber: string,
-    date: Date,
-  ) => {
+  const onSubmit = (train: Train, date: string) => {
     const sendRequests = async () => {
       setLoading(true);
 
       try {
-        const [probability, delayCause] = await Promise.all([
-          TrainDelayApi.predictDelayProbability(
-            from,
-            to,
-            trainNumber,
-            new Date(date),
-          ),
-          TrainDelayApi.predictDelayCause(
-            from,
-            to,
-            trainNumber,
-            new Date(date),
-          ),
+        const [delayResponse, liveDataResponse] = await Promise.all([
+          TrainDelayApi.predictDelayProbability(train, date),
+          TrainDelayApi.getLiveData(train.route, train.trainNumber),
         ]);
+        if (delayResponse == null) {
+          throw 'Something happened during the prediction. Try again later.';
+        }
+
+        // Experiencing delays
+        let delayCauseResponse: PredictionResponse | null = null;
+        if (delayResponse.label === 1) {
+          delayCauseResponse = await TrainDelayApi.predictDelayCause(
+            train,
+            date,
+          );
+        }
+
         setResult({
-          label: delayCause,
-          score: probability,
-          delay: 6.4 * 60 * 1000,
+          train: train,
+          delay: {
+            label: delayResponse.label,
+            confidenceLevel: delayResponse.score,
+          },
+          delayCause:
+            delayCauseResponse != null
+              ? {
+                  label: delayCauseResponse.label,
+                  confidenceLevel: delayCauseResponse.score,
+                }
+              : null,
+          liveData: liveDataResponse,
         });
       } catch (e) {
         alert(e);
-        setLoading(false);
-        return;
       }
-
-      await new Promise(resolve => setTimeout(resolve, 3000));
       setLoading(false);
     };
 
@@ -71,14 +80,22 @@ const HomePage = () => {
   }
 
   return (
-    <div className="flex h-full w-full items-center justify-center bg-backgroundLight px-5 text-textColor dark:bg-backgroundDark">
+    <div className="flex h-full w-full flex-col items-center gap-y-4 overflow-y-auto bg-backgroundLight px-5 py-8 text-textColor dark:bg-backgroundDark">
       {result == null && (
         <DelayPredictionCard
           routes={routes}
           onSubmit={onSubmit}
         />
       )}
-      {result != null && <PredictionResultCard result={result} />}
+      {result != null && (
+        <>
+          <PredictionResultCard result={result} />
+          <TrainDataCard
+            train={result.train}
+            liveData={result.liveData}
+          />
+        </>
+      )}
     </div>
   );
 };

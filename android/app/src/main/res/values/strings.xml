@@ -1,8 +1,15 @@
 <resources>
     <string name="app_name">Hungarian train delays</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_prediction">Prediction</string>
     <string name="title_stats">Statistics</string>
     <string name="title_about">About</string>
+
+
+    <string-array name="time_period_array">
+        <item>Last week</item>
+        <item>Last month</item>
+        <item>Six months</item>
+    </string-array>
+
 </resources>

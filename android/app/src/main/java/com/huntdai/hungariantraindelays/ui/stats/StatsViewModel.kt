@@ -22,13 +22,13 @@ class StatsViewModel@Inject constructor(
     val uiState: StateFlow<StatsUIState> = _uiState.asStateFlow()
 
     fun initUiState() = viewModelScope.launch {
-        when (val response = statsDataSource.getRoutes()) {
-            is DataSourceError -> {
-                _uiState.update { StatsUIState.Demo(listOf("error")) }
-            }
-            is DataSourceResult -> {
-                _uiState.update { StatsUIState.Demo(response.result) }
-            }
-        }
+//        when (val response = statsDataSource.getRoutes()) {
+//            is DataSourceError -> {
+//                _uiState.update { StatsUIState.Demo(listOf("error")) }
+//            }
+//            is DataSourceResult -> {
+//                _uiState.update { StatsUIState.Demo(response.result) }
+//            }
+//        }
     }
 }

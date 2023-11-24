@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_statsFragment_to_monthlySumFragment"
             app:destination="@id/monthlySumFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_highestInTimePeriodFragment"
+            app:destination="@id/highestInTimePeriodFragment" />
     </fragment>
     <fragment
         android:id="@+id/monthlyMeanFragment"
@@ -27,4 +30,9 @@
         android:name="com.huntdai.hungariantraindelays.ui.stats.monthly_total.MonthlyTotalFragment"
         android:label="fragment_monthly_sum"
         tools:layout="@layout/fragment_monthly_total" />
+    <fragment
+        android:id="@+id/highestInTimePeriodFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.HighestInTimePeriodFragment"
+        android:label="fragment_highest_in_time_period"
+        tools:layout="@layout/fragment_highest_in_time_period" />
 </navigation>

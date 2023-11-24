@@ -48,6 +48,10 @@ class StatsFragment : Fragment() {
             findNavController().navigate(R.id.action_statsFragment_to_monthlySumFragment)
         }
 
+        highestButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_highestInTimePeriodFragment)
+        }
+
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 render(it)

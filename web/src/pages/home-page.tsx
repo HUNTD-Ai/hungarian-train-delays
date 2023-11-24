@@ -1,13 +1,24 @@
 import DelayPredictionCard from '../components/delay-prediction-card.tsx';
-import { useState } from 'react';
-import { PredictionResult } from '../models/models.ts';
+import { useEffect, useState } from 'react';
+import { PredictionResult, Route } from '../models/models.ts';
 import PredictionResultCard from '../components/prediction-result-card.tsx';
 import { TrainDelayApi } from '../apis/train-delay-api.ts';
 import LoadingSpinner from '../components/loading-spinner.tsx';
 
 const HomePage = () => {
+  const [routes, setRoutes] = useState<Array<Route>>([]);
   const [result, setResult] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchRoutes = async () => {
+      const routes = await TrainDelayApi.getRoutes();
+      setRoutes(routes);
+      console.log('routes', routes);
+    };
+
+    fetchRoutes();
+  }, []);
 
   const onSubmit = (
     from: string,
@@ -61,7 +72,12 @@ const HomePage = () => {
 
   return (
     <div className="flex h-full w-full items-center justify-center bg-backgroundLight px-5 text-textColor dark:bg-backgroundDark">
-      {result == null && <DelayPredictionCard onSubmit={onSubmit} />}
+      {result == null && (
+        <DelayPredictionCard
+          routes={routes}
+          onSubmit={onSubmit}
+        />
+      )}
       {result != null && <PredictionResultCard result={result} />}
     </div>
   );

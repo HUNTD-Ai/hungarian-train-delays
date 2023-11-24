@@ -22,3 +22,13 @@ export type TrainDelayResponse = {
   label: string;
   score: number;
 };
+
+export type RoutesResponse = {
+  routes: Array<string>;
+};
+
+export type Route = {
+  from: string;
+  to: string;
+  value: string;
+};

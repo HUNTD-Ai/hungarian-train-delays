@@ -1,25 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TrainList from './train-list.tsx';
 import { CloseIcon, TrainIcon, UnfoldMoreIcon } from './icons.tsx';
-import { Train } from '../models/models.ts';
+import { Route, Train } from '../models/models.ts';
 
 type Props = {
+  routes: Array<Route>;
   onSubmit: (from: string, to: string, trainNumber: string, date: Date) => void;
 };
 
-const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
-  const [from, setFrom] = useState<string>('');
-  const [to, setTo] = useState<string>('');
+const DelayPredictionCard: React.FC<Props> = ({ routes, onSubmit }) => {
+  const [departureStations, setDepartureStations] = useState<Array<string>>([]);
+  const [arrivalStations, setArrivalStations] = useState<Array<string>>([]);
+
+  const [from, setFrom] = useState<string | undefined>(undefined);
+  const [to, setTo] = useState<string | undefined>(undefined);
   const [date, setDate] = useState<string>('');
 
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
   const [train, setTrain] = useState<Train | null>(null);
+
+  useEffect(() => {
+    const stations = Array.from(new Set(routes.map(r => r.from)));
+    stations.sort();
+    setDepartureStations(stations);
+  }, [routes]);
+
+  useEffect(() => {
+    const stations = routes.filter(r => r.from === from).map(r => r.to);
+    setArrivalStations(stations);
+  }, [routes, from]);
 
   const submitPredictionInputs = () => {
     if (from != null && to != null && train != null && date != null) {
       onSubmit(from, to, train?.trainNumber, new Date(date));
     }
   };
+
+  const onSelectDepartureStation = (event: {
+    target: { value: React.SetStateAction<string | undefined> };
+  }) => setFrom(event.target.value);
+
+  const onSelectArrivalStation = (event: {
+    target: { value: React.SetStateAction<string | undefined> };
+  }) => setTo(event.target.value);
 
   const trains = [
     {
@@ -168,24 +191,36 @@ const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
         <div
           id="delay-prediction-form-container"
           className="flex flex-col gap-y-3 px-4 py-5 sm:gap-y-6 sm:px-16 sm:py-9">
-          <input
+          <select
+            value={from}
             name="from"
             id="from-input"
-            type="text"
-            placeholder="From"
-            value={from}
-            onChange={event => setFrom(event.target.value)}
-            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
-          />
-          <input
+            onChange={onSelectDepartureStation}
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark">
+            <option value={undefined}>From</option>
+            {departureStations.map((stationName, index) => (
+              <option
+                key={index}
+                value={stationName}>
+                {stationName}
+              </option>
+            ))}
+          </select>
+          <select
+            value={to}
             name="to"
             id="to-input"
-            type="text"
-            placeholder="To"
-            value={to}
-            onChange={event => setTo(event.target.value)}
-            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
-          />
+            onChange={onSelectArrivalStation}
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark">
+            <option value={undefined}>To</option>
+            {arrivalStations.map((stationName, index) => (
+              <option
+                key={index}
+                value={stationName}>
+                {stationName}
+              </option>
+            ))}
+          </select>
           <div className="flex w-full flex-col gap-x-6 gap-y-3 sm:flex-row">
             <input
               name="date"

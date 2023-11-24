@@ -1,7 +1,30 @@
 import ApiConstants from './api-constants.ts';
-import { TrainDelayRequest, TrainDelayResponse } from '../models/models.ts';
+import {
+  Route,
+  RoutesResponse,
+  TrainDelayRequest,
+  TrainDelayResponse,
+} from '../models/models.ts';
 
 export const TrainDelayApi = {
+  getRoutes: async (): Promise<Array<Route>> => {
+    try {
+      const response: Response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/routes',
+      );
+      const routesResponse: RoutesResponse = await response.json();
+      return routesResponse.routes.map(x => {
+        const [from, to] = x.split(' - ');
+        return {
+          from: from,
+          to: to,
+          value: x,
+        };
+      });
+    } catch (e) {
+      return [];
+    }
+  },
   predictDelayProbability: async (
     from: string,
     to: string,

@@ -1,154 +1,83 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import TrainList from './train-list.tsx';
 import { CloseIcon, TrainIcon, UnfoldMoreIcon } from './icons.tsx';
-import { Train } from '../models/models.ts';
+import { Route, Train } from '../models/models.ts';
+import { TrainDelayApi } from '../apis/train-delay-api.ts';
+import LoadingSpinner from './loading-spinner.tsx';
 
 type Props = {
-  onSubmit: (from: string, to: string, trainNumber: string, date: Date) => void;
+  routes: Array<Route>;
+  onSubmit: (train: Train, date: string) => void;
 };
 
-const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
-  const [from, setFrom] = useState<string>('');
-  const [to, setTo] = useState<string>('');
-  const [date, setDate] = useState<string>('');
+const DelayPredictionCard: React.FC<Props> = ({ routes, onSubmit }) => {
+  const [departureStations, setDepartureStations] = useState<Array<string>>([]);
+  const [arrivalStations, setArrivalStations] = useState<Array<string>>([]);
+
+  const [from, setFrom] = useState<string | undefined>(undefined);
+  const [to, setTo] = useState<string | undefined>(undefined);
+  const [date, setDate] = useState<string | undefined>(undefined);
 
   const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [trainsLoading, setTrainsLoading] = useState<boolean>(false);
+  const [trains, setTrains] = useState<Array<Train>>([]);
   const [train, setTrain] = useState<Train | null>(null);
+
+  const fetchTimeTable = useCallback(async (route: Route, date: string) => {
+    setTrainsLoading(true);
+    const timetable = await TrainDelayApi.getTimetable(route.value, date);
+    const timetableTrains: Array<Train> = [];
+    timetable?.plans?.forEach(t => {
+      if (t.details.length != 0) {
+        timetableTrains.push({
+          route: t.route,
+          trainNumber: t.details[0].train_number,
+          departureTime: t.departure_time,
+          travelTime: t.duration,
+          arrivalTime: t.arrival_time,
+        });
+      }
+    });
+    setTrains(timetableTrains);
+    setTrainsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    const stations = Array.from(new Set(routes.map(r => r.from)));
+    stations.sort();
+    setDepartureStations(stations);
+  }, [routes]);
+
+  useEffect(() => {
+    const stations = routes
+      .filter(r => r.from === from)
+      .map(r => r.to)
+      .sort();
+    setArrivalStations(stations);
+  }, [routes, from]);
+
+  useEffect(() => {
+    if (from != undefined && to != undefined && date != undefined) {
+      const route = routes.find(r => r.from === from && r.to === to);
+      if (route != undefined) {
+        fetchTimeTable(route, date);
+      }
+    }
+  }, [from, to, date, routes, fetchTimeTable]);
 
   const submitPredictionInputs = () => {
     if (from != null && to != null && train != null && date != null) {
-      onSubmit(from, to, train?.trainNumber, new Date(date));
+      onSubmit(train, date);
     }
   };
 
-  const trains = [
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-    {
-      trainNumber: '6020',
-      serviceName: 'MÁV',
-      departureTime: new Date(),
-      arrivalTime: new Date(),
-      travelTime: new Date(),
-    },
-  ];
+  const onSelectDepartureStation = (event: {
+    target: { value: React.SetStateAction<string | undefined> };
+  }) => setFrom(event.target.value);
+
+  const onSelectArrivalStation = (event: {
+    target: { value: React.SetStateAction<string | undefined> };
+  }) => setTo(event.target.value);
 
   const trainSelectorStyle =
     'bg-opacity-[42%] text-opacity-[42%] bg-textBoxBackgroundLight dark:bg-textBoxBackgroundDark flex h-12 w-full items-center rounded-[10px] pl-3 pr-2';
@@ -168,24 +97,36 @@ const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
         <div
           id="delay-prediction-form-container"
           className="flex flex-col gap-y-3 px-4 py-5 sm:gap-y-6 sm:px-16 sm:py-9">
-          <input
+          <select
+            value={from}
             name="from"
             id="from-input"
-            type="text"
-            placeholder="From"
-            value={from}
-            onChange={event => setFrom(event.target.value)}
-            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
-          />
-          <input
+            onChange={onSelectDepartureStation}
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark">
+            <option value={undefined}>From</option>
+            {departureStations.map((stationName, index) => (
+              <option
+                key={index}
+                value={stationName}>
+                {stationName}
+              </option>
+            ))}
+          </select>
+          <select
+            value={to}
             name="to"
             id="to-input"
-            type="text"
-            placeholder="To"
-            value={to}
-            onChange={event => setTo(event.target.value)}
-            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark"
-          />
+            onChange={onSelectArrivalStation}
+            className="h-12 w-full rounded-[10px] bg-textBoxBackgroundLight px-3 text-xl text-textBoxTextColorLight dark:bg-textBoxBackgroundDark dark:text-textBoxTextColorDark">
+            <option value={undefined}>To</option>
+            {arrivalStations.map((stationName, index) => (
+              <option
+                key={index}
+                value={stationName}>
+                {stationName}
+              </option>
+            ))}
+          </select>
           <div className="flex w-full flex-col gap-x-6 gap-y-3 sm:flex-row">
             <input
               name="date"
@@ -271,13 +212,25 @@ const DelayPredictionCard: React.FC<Props> = ({ onSubmit }) => {
               </span>
               <CloseIcon onClick={() => setPopupVisible(false)} />
             </div>
-            <TrainList
-              trains={trains}
-              onSelectTrain={t => {
-                setTrain(t);
-                setPopupVisible(false);
-              }}
-            />
+            {trainsLoading && (
+              <div className="flex h-full w-full items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            )}
+            {!trainsLoading && trains.length === 0 && (
+              <div className="flex h-full w-full items-center justify-center">
+                Timetable is empty
+              </div>
+            )}
+            {!trainsLoading && trains.length > 0 && (
+              <TrainList
+                trains={trains}
+                onSelectTrain={t => {
+                  setTrain(t);
+                  setPopupVisible(false);
+                }}
+              />
+            )}
           </div>
         </div>
       )}

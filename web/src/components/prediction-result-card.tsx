@@ -1,10 +1,11 @@
+import { PredictionResult } from '../models/models.ts';
+import React from 'react';
 import {
   greenResultTextStyle,
   redResultTextStyle,
   yellowResultTextStyle,
 } from '../constants/text-constants.ts';
-import { PredictionResult } from '../models/models.ts';
-import React from 'react';
+import { translateDelayCauseToEnglish } from '../models/delay-causes-mapper.ts';
 
 type Props = {
   result: PredictionResult;
@@ -27,46 +28,38 @@ const PredictionResultCard: React.FC<Props> = ({ result }) => {
           id="probability-of-delays"
           className="flex flex-col">
           <span className="text-sm text-textBoxTextColorLight dark:text-textColor sm:text-lg">
-            Probability of experiencing delays
+            Experiencing delays
           </span>
           <span
             className={
-              result.score <= 50
-                ? greenResultTextStyle
-                : result.score <= 80
+              result.delay.confidenceLevel <= 0.8
                 ? yellowResultTextStyle
+                : result.delay.label === 0
+                ? greenResultTextStyle
                 : redResultTextStyle
             }>
-            {result.score} %
+            {result.delay.label === 0
+              ? 'Likely less than 5 minutes '
+              : 'Likely more than 5 minutes '}
+            ({(result.delay.confidenceLevel * 100).toFixed(2)} % confident)
           </span>
+          <span></span>
         </div>
 
-        <div
-          id="most-probable-casue-of-delay"
-          className="flex flex-col text-textBoxTextColorLight dark:text-textColor">
-          <span className="text-sm sm:text-lg">
-            Most probable cause of delay
-          </span>
-          <span className="text-lg font-semibold sm:text-2xl">
-            {result.label}
-          </span>
-        </div>
-
-        <div
-          id="predicted delay"
-          className="flex flex-col text-textBoxTextColorLight dark:text-textColor">
-          <span className="text-sm sm:text-lg">Predicted delay</span>
-          <span
-            className={
-              result.delay <= 5 * 60 * 1000
-                ? greenResultTextStyle
-                : result.delay <= 10 * 60 * 1000
-                ? yellowResultTextStyle
-                : redResultTextStyle
-            }>
-            5min 9s
-          </span>
-        </div>
+        {result.delayCause != null && (
+          <div
+            id="most-probable-casue-of-delay"
+            className="flex flex-col text-textBoxTextColorLight dark:text-textColor">
+            <span className="text-sm sm:text-lg">
+              Most probable cause of delay
+            </span>
+            <span className="text-lg font-semibold sm:text-2xl">
+              {translateDelayCauseToEnglish(String(result.delayCause.label))} (
+              {(result.delayCause.confidenceLevel * 100).toFixed(2)} %
+              confident)
+            </span>
+          </div>
+        )}
 
         <div
           id="select-another-train-button-container"

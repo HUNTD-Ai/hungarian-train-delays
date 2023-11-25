@@ -42,20 +42,13 @@ const TrainList: React.FC<Props> = ({ trains, onSelectTrain }) => {
               <span>{train.trainNumber}</span>
             </div>
             <div className="flex h-full w-full items-center pl-2">
-              <span>
-                {train.departureTime.getHours()}:
-                {train.departureTime.getMinutes()}
-              </span>
+              <span>{train.departureTime}</span>
             </div>
             <div className="flex h-full w-full items-center pl-2">
-              <span>
-                {train.arrivalTime.getHours()}:{train.arrivalTime.getMinutes()}
-              </span>
+              <span>{train.arrivalTime}</span>
             </div>
             <div className="flex h-full w-full items-center justify-between px-2">
-              <span>
-                {train.travelTime.getHours()}:{train.travelTime.getMinutes()}h
-              </span>
+              <span>{train.travelTime}</span>
               <ArrowRightIcon
                 className="text-green-500"
                 onClick={() => onSelectTrain(train)}

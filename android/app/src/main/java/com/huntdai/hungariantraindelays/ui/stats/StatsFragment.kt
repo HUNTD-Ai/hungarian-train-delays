@@ -52,6 +52,10 @@ class StatsFragment : Fragment() {
             findNavController().navigate(R.id.action_statsFragment_to_highestInTimePeriodFragment)
         }
 
+        meanPerRouteButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_meanPerRouteFragment)
+        }
+
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 render(it)

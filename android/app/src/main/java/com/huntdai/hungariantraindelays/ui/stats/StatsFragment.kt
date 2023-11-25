@@ -1,60 +1,79 @@
 package com.huntdai.hungariantraindelays.ui.stats
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.huntdai.hungariantraindelays.R
+import com.huntdai.hungariantraindelays.databinding.FragmentStatsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [StatsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class StatsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var meanButton: Button
+    private lateinit var totalButton: Button
+    private lateinit var highestButton: Button
+    private lateinit var meanPerRouteButton: Button
+
+    private val viewModel: StatsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_stats, container, false)
+        val binding = FragmentStatsBinding.inflate(layoutInflater)
+        meanButton = binding.meanButton
+        totalButton = binding.totalButton
+        highestButton= binding.highestButton
+        meanPerRouteButton = binding.meanPerRouteButton
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StatsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StatsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        meanButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_monthlyMeanFragment)
+        }
+
+        totalButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_monthlySumFragment)
+        }
+
+        highestButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_highestInTimePeriodFragment)
+        }
+
+        meanPerRouteButton.setOnClickListener {
+            findNavController().navigate(R.id.action_statsFragment_to_meanPerRouteFragment)
+        }
+
+        lifecycleScope.launch {
+            viewModel.uiState.collect {
+                render(it)
             }
+        }
+        viewModel.initUiState()
     }
+
+    private fun render(uiState: StatsUIState) {
+        when (uiState) {
+            is StatsUIState.Initial -> {}
+            is StatsUIState.Demo -> {
+                Log.d("DEMO", uiState.routes.toString())
+            }
+            is StatsUIState.MonthlyHighestSelected -> {}
+            is StatsUIState.MonthlyMeanSelected -> {}
+            is StatsUIState.MonthlySumSelected -> {}
+        }
+    }
+
 }

@@ -70,3 +70,12 @@ export type PlanDetail = {
   arr_info: string;
   train_number: string;
 };
+
+export type StatResponse = {
+  delays: Array<DelayStat>;
+};
+
+export type DelayStat = {
+  timestamp: Date;
+  delay: number;
+};

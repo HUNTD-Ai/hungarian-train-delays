@@ -7,6 +7,8 @@ import {
   PredictionRequest,
   PredictionResponse,
   LiveDataResponse,
+  DelayStat,
+  StatResponse,
 } from '../models/models.ts';
 
 export const TrainDelayApi = {
@@ -123,6 +125,34 @@ export const TrainDelayApi = {
         },
       );
       return await response.json();
+    } catch (e) {
+      return null;
+    }
+  },
+  getMonthlyMean: async (): Promise<Array<DelayStat> | null> => {
+    try {
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/monthly-mean',
+      );
+      const statResponse: StatResponse = await response.json();
+      return statResponse.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
+    } catch (e) {
+      return null;
+    }
+  },
+  getMonthlySums: async (): Promise<Array<DelayStat> | null> => {
+    try {
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/monthly-sum',
+      );
+      const statResponse: StatResponse = await response.json();
+      return statResponse.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
     } catch (e) {
       return null;
     }

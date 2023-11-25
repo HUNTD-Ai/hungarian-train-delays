@@ -1,12 +1,12 @@
-package com.huntdai.hungariantraindelays.data.network
+package com.huntdai.hungariantraindelays.data.network.stats
 
-import com.huntdai.hungariantraindelays.data.network.models.body.HighestDelayInTimePeriodBody
-import com.huntdai.hungariantraindelays.data.network.models.body.MeanRouteDelayBody
-import com.huntdai.hungariantraindelays.data.network.models.response.MeanRouteDelayResponse
-import com.huntdai.hungariantraindelays.data.network.models.response.MonthlyHighestDelayResponse
-import com.huntdai.hungariantraindelays.data.network.models.response.MonthlyMeanDelayResponse
-import com.huntdai.hungariantraindelays.data.network.models.response.MonthlyTotalDelayResponse
-import com.huntdai.hungariantraindelays.data.network.models.response.RoutesResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.HighestDelayInTimePeriodBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.MeanRouteDelayBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.MeanRouteDelayResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyHighestDelayResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyMeanDelayResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyTotalDelayResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.RoutesResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -27,7 +27,6 @@ interface StatsApi {
     suspend fun getMonthlyTotalDelay(): Response<MonthlyTotalDelayResponse>
 
     @POST("highest-delay")
-
     suspend fun getHighestDelayInTimePeriod(@Body body: HighestDelayInTimePeriodBody): Response<MonthlyHighestDelayResponse>
 
     @POST("mean-route-delay")

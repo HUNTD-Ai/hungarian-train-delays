@@ -1,13 +1,13 @@
-package com.huntdai.hungariantraindelays.data.network
+package com.huntdai.hungariantraindelays.data.network.stats
 
 import android.util.Log
 import com.huntdai.hungariantraindelays.data.DataSourceError
 import com.huntdai.hungariantraindelays.data.DataSourceResponse
 import com.huntdai.hungariantraindelays.data.DataSourceResult
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.ui.models.Route
-import com.huntdai.hungariantraindelays.data.network.models.body.HighestDelayInTimePeriodBody
-import com.huntdai.hungariantraindelays.data.network.models.body.MeanRouteDelayBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.HighestDelayInTimePeriodBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.MeanRouteDelayBody
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 import com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.models.TimePeriod
 import com.huntdai.hungariantraindelays.utils.combineRouteEnds

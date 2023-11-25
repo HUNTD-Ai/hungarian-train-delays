@@ -1,6 +1,6 @@
 package com.huntdai.hungariantraindelays.ui.stats.mean_per_route
 
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 
 sealed class MeanPerRouteUIState(routeDestinationMap: RouteDestinationMap?)  {

@@ -1,6 +1,8 @@
 package com.huntdai.hungariantraindelays.di
 
-import com.huntdai.hungariantraindelays.data.network.StatsApi
+import com.huntdai.hungariantraindelays.data.network.delay_cause.DelayCauseApi
+import com.huntdai.hungariantraindelays.data.network.prediction.DelayPredictionApi
+import com.huntdai.hungariantraindelays.data.network.stats.StatsApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -36,6 +38,57 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideStatsApi(retrofit: Retrofit): StatsApi = retrofit.create(StatsApi::class.java)
+    fun provideRetrofitContainer(okHttpClient: OkHttpClient): RetrofitContainer {
+        val moshi = Moshi.Builder()
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
 
+        val statsRetrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(StatsApi.ENDPOINT_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+
+        val delayCauseRetrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(DelayCauseApi.ENDPOINT_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+
+        val delayPredictionRetrofit = Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(DelayPredictionApi.ENDPOINT_URL)
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .build()
+
+        return RetrofitContainer(
+            statsRetrofit = statsRetrofit,
+            delayCauseRetrofit =  delayCauseRetrofit,
+            delayPredictionRetrofit =  delayPredictionRetrofit
+        )
+
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatsApi(retrofitContainer: RetrofitContainer): StatsApi {
+        return retrofitContainer.statsRetrofit.create(StatsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDelayPredictionApi(retrofitContainer: RetrofitContainer): DelayPredictionApi {
+        return retrofitContainer.delayPredictionRetrofit.create(DelayPredictionApi::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideDelayCauseApi(retrofitContainer: RetrofitContainer): DelayCauseApi {
+        return retrofitContainer.delayCauseRetrofit.create(DelayCauseApi::class.java)
+    }
 }
+
+data class RetrofitContainer(
+    val statsRetrofit : Retrofit,
+    val delayCauseRetrofit : Retrofit,
+    val delayPredictionRetrofit : Retrofit,
+)

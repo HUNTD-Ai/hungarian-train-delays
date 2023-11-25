@@ -2,16 +2,12 @@ package com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.huntdai.hungariantraindelays.data.DataSourceError
-import com.huntdai.hungariantraindelays.data.DataSourceResult
-import com.huntdai.hungariantraindelays.data.network.StatsDataSource
+import com.huntdai.hungariantraindelays.data.network.stats.StatsDataSource
 import com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.models.TimePeriod
-import com.huntdai.hungariantraindelays.ui.stats.monthly_total.MonthlyTotalUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

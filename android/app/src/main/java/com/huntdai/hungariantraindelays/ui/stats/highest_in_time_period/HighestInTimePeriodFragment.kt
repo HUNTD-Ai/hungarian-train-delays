@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.huntdai.hungariantraindelays.R
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.databinding.FragmentHighestInTimePeriodBinding
 import com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.models.TimePeriod
 import com.huntdai.hungariantraindelays.utils.fromInt

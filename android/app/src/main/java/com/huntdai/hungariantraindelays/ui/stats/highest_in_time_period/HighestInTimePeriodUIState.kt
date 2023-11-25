@@ -1,6 +1,6 @@
 package com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period
 
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.models.TimePeriod
 
 sealed class HighestInTimePeriodUIState(selectedTimePeriod: TimePeriod)  {

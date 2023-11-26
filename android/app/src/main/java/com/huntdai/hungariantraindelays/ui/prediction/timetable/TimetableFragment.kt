@@ -1,40 +1,34 @@
 package com.huntdai.hungariantraindelays.ui.prediction.timetable
 
-import android.app.DatePickerDialog
-import android.app.Dialog
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.huntdai.hungariantraindelays.databinding.FragmentTimetableBinding
-import com.huntdai.hungariantraindelays.ui.prediction.PredictionFragment
+import com.huntdai.hungariantraindelays.ui.prediction.PredictionFragmentDirections
+import com.huntdai.hungariantraindelays.ui.prediction.timetable.adapter.TimetableAdapter
+import com.huntdai.hungariantraindelays.ui.prediction.timetable.models.TrainDeparture
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.Serializable
-import java.util.Calendar
+
 @AndroidEntryPoint
-class TimetableFragment : AppCompatDialogFragment() {
+class TimetableFragment : Fragment() {
     private lateinit var binding: FragmentTimetableBinding
-    //private lateinit var adapter: TimetableAdapter
+    private lateinit var adapter: TimetableAdapter
     private val viewModel: TimetableViewModel by viewModels()
     private val args: TimetableFragmentArgs by navArgs()
     private lateinit var route: String
     private lateinit var date: String
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, 0)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -48,13 +42,15 @@ class TimetableFragment : AppCompatDialogFragment() {
         route = args.route
         date = args.date
 
+        Log.d("DEMO", "TIMETABLEINFO ATVEVE" + route + date)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //setupRecyclerView()
+        setupRecyclerView()
 
         lifecycleScope.launch {
             viewModel.uiState.collect {
@@ -65,30 +61,34 @@ class TimetableFragment : AppCompatDialogFragment() {
     }
 
     private fun render(uiState: TimetableUIState) {
-//        when (uiState) {
-//            is Initial -> {}
-//            is RoutesLoaded -> {
-//                adapter.replaceList(uiState.routes)
-//            }
-//        }
+        Log.d("DEMO", "TIMETABLEINFO UISTATE" + uiState.toString())
+        when (uiState) {
+            is TimetableUIState.Initial -> {}
+            is TimetableUIState.Loaded -> {
+                adapter.replaceList(uiState.trains)
+            }
+            TimetableUIState.Error -> {}
+            TimetableUIState.Loading -> {}
+        }
     }
 
 
-//    private fun setupRecyclerView() {
-//        adapter = HomeAdapter()
-//        adapter.setOnItemClickListener(this::onItemClick)
-//
-//        val rv = binding.homeList
-//        rv.layoutManager = LinearLayoutManager(context)
-//        rv.adapter = adapter
-//    }
-//
-//    private fun onItemClick(route: Route) {
-//        val bundle = bundleOf("userRouteId" to route.id.toString())
-//        findNavController().navigate(
-//            R.id.map,
-//            bundle
-//        )
-//    }
+    private fun setupRecyclerView() {
+        adapter = TimetableAdapter()
+        adapter.setOnItemClickListener(this::onItemClick)
+
+        val rv = binding.trainList
+        rv.layoutManager = LinearLayoutManager(context)
+        rv.adapter = adapter
+    }
+
+    private fun onItemClick(trainDeparture: TrainDeparture) {
+        val action = TimetableFragmentDirections.actionTimetableFragmentToPredictionResultFragment(
+            route = trainDeparture.route,
+            departureTime = trainDeparture.departureTime,
+            trainNumber = trainDeparture.trainNumber
+        )
+        findNavController().navigate(action)
+    }
 
 }

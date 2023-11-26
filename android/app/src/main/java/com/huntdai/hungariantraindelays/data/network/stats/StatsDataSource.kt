@@ -7,8 +7,10 @@ import com.huntdai.hungariantraindelays.data.DataSourceResult
 import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.ui.models.Route
 import com.huntdai.hungariantraindelays.data.network.stats.models.body.HighestDelayInTimePeriodBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.LiveDataBody
 import com.huntdai.hungariantraindelays.data.network.stats.models.body.MeanRouteDelayBody
 import com.huntdai.hungariantraindelays.data.network.stats.models.body.TimetableBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.LiveDataResponse
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 import com.huntdai.hungariantraindelays.ui.prediction.timetable.models.TrainDeparture
 import com.huntdai.hungariantraindelays.ui.stats.highest_in_time_period.models.TimePeriod
@@ -205,15 +207,16 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                 )
                 Log.d("DEMO", "BODY" + body.toString())
                 val response = statsApi.getTimetable(body)
-                Log.d("DEMO", "RESP" + response.toString())
+//                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val plans = response.body()?.plans
+                    Log.d("DEMO", "RESP" + response.toString())
                     if (plans != null) {
                         val trainDepartureList = mutableListOf<TrainDeparture>()
                         for (plan in plans) {
                             val route = plan.route
                             val departureTime = plan.departureTime
-                            val arrivalTime = plan.departureTime
+                            val arrivalTime = plan.arrivalTime
                             val duration = plan.duration
                             val trainNumber = plan.details[0].trainNumber
                             if (route != null && departureTime != null && arrivalTime != null && duration != null && trainNumber != null)
@@ -227,7 +230,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                                     )
                                 )
                         }
-                        DataSourceResult(trainDepartureList)
+                        return@withContext DataSourceResult(trainDepartureList)
                     }
                     DataSourceError
                 } else {
@@ -239,28 +242,22 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
             }
         }
 
-    suspend fun getLiveData(route: Route): DataSourceResponse<List<Delay>> =
+    suspend fun getLiveData(route: String, trainNumber: Int): DataSourceResponse<LiveDataResponse> =
         withContext(Dispatchers.IO) {
             try {
-                val today = getTodaysDate()
-                val todaysUnix = today.time.time
 
-                val monthAgo = today
-                monthAgo.add(Calendar.DATE, -30)
-                val monthAgoUnix = monthAgo.time.time
 
-                val body = MeanRouteDelayBody(
-                    route = combineRouteEnds(route.startDestination, route.endDestination),
-                    startTimestamp = monthAgoUnix.toString(),
-                    endTimestamp = todaysUnix.toString()
+                val body = LiveDataBody(
+                    route = route,
+                    trainNumber = trainNumber
                 )
                 Log.d("DEMO", "BODY" + body.toString())
-                val response = statsApi.getMeanRouteDelay(body)
+                val response = statsApi.getLiveData(body)
                 Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
-                    val delays = response.body()?.delays?.delays
-                    if (delays != null) {
-                        return@withContext DataSourceResult(delays)
+                    val result = response.body()
+                    if (result != null) {
+                        return@withContext DataSourceResult(result)
                     }
                     DataSourceError
                 } else {

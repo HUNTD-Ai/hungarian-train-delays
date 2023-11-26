@@ -21,15 +21,15 @@ import javax.inject.Singleton
 @Singleton
 class DelayPredictionDataSource @Inject constructor(private val delayPredictionApi: DelayPredictionApi){
 
-    suspend fun getDelayPrediction(route : Route, trainNumber : Int, departureTime : String): DataSourceResponse<String> =
+    suspend fun getDelayPrediction(route : String, trainNumber : Int, departureTime : String): DataSourceResponse<String> =
         withContext(Dispatchers.IO) {
             try {
                 val body = DelayPredictionBody(
-                    route = combineRouteEnds(route.startDestination, route.endDestination),
+                    route = route,
                     trainNumber = trainNumber.toString(),
                     departureTime = departureTime
                 )
-                Log.d("DEMO", "BODY" + body.toString())
+                Log.d("DEMO", "BODYDELAYPRED" + body.toString())
                 val response = delayPredictionApi.predictDelay(body)
                 Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {

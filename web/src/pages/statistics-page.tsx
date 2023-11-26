@@ -208,7 +208,7 @@ const StatisticsPage = () => {
         <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
           <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
             <span className="text-lg font-semibold">
-              Highest delays (last 30 days)
+              Highest delays (past 30 days)
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">

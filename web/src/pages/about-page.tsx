@@ -35,7 +35,7 @@ const AboutPage = () => {
           to identify the potential weak points of the system.
         </p>
 
-        <p>
+        <div>
           Contributors:
           <ul className="list-inside list-disc">
             <li>
@@ -63,7 +63,7 @@ const AboutPage = () => {
               </a>
             </li>
           </ul>
-        </p>
+        </div>
 
         <p className="italic">
           This project is open source, you can find the source code{' '}

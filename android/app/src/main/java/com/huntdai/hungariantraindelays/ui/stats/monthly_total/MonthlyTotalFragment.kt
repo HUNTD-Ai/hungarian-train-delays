@@ -45,7 +45,7 @@ class MonthlyTotalFragment : Fragment() {
         chart = binding.chart
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
-        binding.title.text = "Monthly Total delays"
+        binding.title.text = "Monthly total delays"
         setupChart()
         return binding.root
     }
@@ -94,8 +94,6 @@ class MonthlyTotalFragment : Fragment() {
         val entries = ArrayList<BarEntry>()
         val labels = mutableListOf<String>()
 
-        Log.d("DEMO", "TOTALLLIST" + delays.toString())
-
         for (i in delays.indices) {
             val barEntry = delays[i].delay?.let { BarEntry(i.toFloat(), it.toFloat()) }
             if (barEntry != null) {
@@ -125,7 +123,6 @@ class MonthlyTotalFragment : Fragment() {
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.granularity = 1f
         xAxis.isGranularityEnabled = true
-
 
         chart.invalidate()
     }

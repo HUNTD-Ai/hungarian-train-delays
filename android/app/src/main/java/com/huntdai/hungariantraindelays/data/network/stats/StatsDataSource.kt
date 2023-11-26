@@ -66,6 +66,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                                 startDestinations.getOrDefault(startDestination, mutableListOf())
                                     .toMutableList()
                             endDestinationsAlreadyAdded.add(endDestination)
+                            endDestinationsAlreadyAdded.sort()
                             startDestinations[startDestination] = endDestinationsAlreadyAdded
                         }
                     }

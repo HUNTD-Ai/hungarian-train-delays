@@ -113,13 +113,14 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun setStartDestinationValues(routeDestinationMap: RouteDestinationMap){
         Log.d("DEMO", "setStartDestinationValues: " + routeDestinationMap.toString())
         this.routeDestinationMap = routeDestinationMap
-        val startdestinations = routeDestinationMap.startDestinations.keys.toList()
+        val startdestinations = routeDestinationMap.startDestinations.keys.toMutableList()
+        startdestinations.sort()
+        //val startdestinationsList = startdestinations.toList()
         context?.let {
             ArrayAdapter(
                 it,
             android.R.layout.simple_spinner_item,
                 startdestinations,
-
             ).also { adapter ->
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 startDestinationSpinner.adapter = adapter

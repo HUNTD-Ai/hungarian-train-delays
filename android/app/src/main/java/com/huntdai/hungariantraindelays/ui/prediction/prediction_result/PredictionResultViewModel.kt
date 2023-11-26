@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,18 +30,27 @@ class PredictionResultViewModel @Inject constructor(
         MutableStateFlow<PredictionResultUIState>(PredictionResultUIState.Initial)
     val uiState: StateFlow<PredictionResultUIState> = _uiState.asStateFlow()
 
-    fun initUiState(route: String, departureTime: String, trainNumber: String) =
+    fun initUiState(route: String, departureTime: String, trainNumber: String, departureDateInMillis : String) =
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
+                val parts = departureTime.split(":")
+                val hour = parts[0]
+                val minute = parts[1]
+                val date = Calendar.getInstance()
+                date.timeInMillis = departureDateInMillis.toLong()
+                date.set(Calendar.HOUR_OF_DAY, hour.toInt())
+                date.set(Calendar.MINUTE, minute.toInt())
+
+                val departure = date.time.toInstant().toString()
                 _uiState.update { PredictionResultUIState.Loading }
                 val delayTimeResponse = delayPredictionDataSource.getDelayPrediction(
                     route = route,
-                    departureTime = departureTime,
+                    departureTime = departure,
                     trainNumber = trainNumber.toInt()
                 )
                 val delayCauseResponse = delayCauseDataSource.getDelayCause(
                     route = route,
-                    departureTime = departureTime,
+                    departureTime = departure,
                     trainNumber = trainNumber.toInt()
                 )
                 val liveStatsResponse =
@@ -49,16 +59,16 @@ class PredictionResultViewModel @Inject constructor(
                     if (liveStatsResponse !is DataSourceResult) {
                         _uiState.update {
                             PredictionResultUIState.Loaded(
-                                delayTime = delayTimeResponse.result,
-                                delayCause = delayCauseResponse.result,
+                                delayTime = delayTimeResponse.result.label,
+                                delayCause = delayCauseResponse.result.label,
                                 null, null
                             )
                         }
                     } else {
                         _uiState.update {
                             PredictionResultUIState.Loaded(
-                                delayTime = (delayTimeResponse as DataSourceResult).result,
-                                delayCause = (delayCauseResponse as DataSourceResult).result,
+                                delayTime = (delayTimeResponse as DataSourceResult).result.label,
+                                delayCause = (delayCauseResponse as DataSourceResult).result.label,
                                 liveDelayTime = liveStatsResponse.result.delay.toString(),
                                 liveDelayCause = liveStatsResponse.result.delayCause.toString()
                             )

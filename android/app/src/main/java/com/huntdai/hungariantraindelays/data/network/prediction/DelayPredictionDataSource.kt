@@ -21,7 +21,7 @@ import javax.inject.Singleton
 @Singleton
 class DelayPredictionDataSource @Inject constructor(private val delayPredictionApi: DelayPredictionApi){
 
-    suspend fun getDelayPrediction(route : String, trainNumber : Int, departureTime : String): DataSourceResponse<String> =
+    suspend fun getDelayPrediction(route : String, trainNumber : Int, departureTime : String): DataSourceResponse<DelayPredictionResponse> =
         withContext(Dispatchers.IO) {
             try {
                 val body = DelayPredictionBody(
@@ -33,9 +33,9 @@ class DelayPredictionDataSource @Inject constructor(private val delayPredictionA
                 val response = delayPredictionApi.predictDelay(body)
                 Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
-                    val delay = response.body()?.delay
-                    if (delay != null) {
-                        return@withContext DataSourceResult(delay)
+                    val result = response.body()
+                    if (result != null) {
+                        return@withContext DataSourceResult(result)
                     }
                     DataSourceError
                 } else {

@@ -29,7 +29,7 @@
             android:name="route"
             app:argType="string" />
         <argument
-            android:name="date"
+            android:name="dateInMillis"
             app:argType="string" />
         <action
             android:id="@+id/action_timetableFragment_to_predictionResultFragment"
@@ -46,6 +46,8 @@
         <argument android:name="departureTime" />
         <argument
             android:name="trainNumber"
+            app:argType="string" />
+        <argument android:name="departureDateInMillis"
             app:argType="string" />
     </fragment>
 </navigation>

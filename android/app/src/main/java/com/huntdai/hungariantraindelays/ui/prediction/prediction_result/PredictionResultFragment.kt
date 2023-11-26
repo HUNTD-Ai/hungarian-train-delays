@@ -30,6 +30,7 @@ class PredictionResultFragment : Fragment() {
     private val args: PredictionResultFragmentArgs by navArgs()
     private lateinit var route: String
     private lateinit var departureTime: String
+    private lateinit var departureDateInMillis: String
     private lateinit var trainNumber: String
 
     override fun onCreateView(
@@ -50,6 +51,7 @@ class PredictionResultFragment : Fragment() {
         route = args.route
         departureTime = args.departureTime
         trainNumber = args.trainNumber
+        departureDateInMillis = args.departureDateInMillis
 
         anotherPredictionButton.setOnClickListener {
             findNavController().popBackStack()
@@ -60,7 +62,7 @@ class PredictionResultFragment : Fragment() {
                 render(it)
             }
         }
-        viewModel.initUiState(route = route, departureTime = departureTime, trainNumber = trainNumber)
+        viewModel.initUiState(route = route, departureTime = departureTime, trainNumber = trainNumber, departureDateInMillis = departureDateInMillis)
     }
 
     private fun render(uiState: PredictionResultUIState) {

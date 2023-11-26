@@ -1,6 +1,5 @@
 package com.huntdai.hungariantraindelays.ui.prediction
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -19,19 +18,26 @@ import com.huntdai.hungariantraindelays.R
 import com.huntdai.hungariantraindelays.databinding.FragmentPredictionBinding
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 import com.huntdai.hungariantraindelays.ui.prediction.date_picker.DatePickerFragment
-import com.huntdai.hungariantraindelays.ui.stats.mean_per_route.MeanPerRouteUIState
+import com.huntdai.hungariantraindelays.utils.combineRouteEnds
+import com.huntdai.hungariantraindelays.utils.getTodaysDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import kotlin.properties.Delegates
 
 @AndroidEntryPoint
 class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val viewModel: PredictionViewModel by viewModels()
-    private lateinit var startDestinationSpinner : Spinner
-    private lateinit var endDestinationSpinner : Spinner
-    private lateinit var trainNumber : TextView
+    private lateinit var startDestinationSpinner: Spinner
+    private lateinit var endDestinationSpinner: Spinner
+    private lateinit var trainNumber: TextView
     private lateinit var selectDateButton: Button
     private lateinit var selectTrainNumberButton: Button
     private lateinit var predictButton: Button
+
+    private var yearSelected by Delegates.notNull<Int>()
+    private var monthSelected by Delegates.notNull<Int>()
+    private var daySelected by Delegates.notNull<Int>()
 
 
     private lateinit var routeDestinationMap: RouteDestinationMap
@@ -57,11 +63,10 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        showDelaysButton.setOnClickListener {
-//            val selectedStartDestination = startDestinationSpinner.selectedItem.toString()
-//            val selectedEndDestination = endDestinationSpinner.selectedItem.toString()
-//            viewModel.loadDelays(startDestination = selectedStartDestination, endDestination = selectedEndDestination)
-//        }
+        val todaysDate = getTodaysDate()
+        yearSelected = todaysDate.get(Calendar.YEAR)
+        monthSelected = todaysDate.get(Calendar.MONTH)
+        daySelected = todaysDate.get(Calendar.DAY_OF_MONTH)
 
         selectDateButton.setOnClickListener {
             Log.d("DEMO", "NAV SELECT DATE")
@@ -70,7 +75,19 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
         selectTrainNumberButton.setOnClickListener {
             Log.d("DEMO", "nav timetable")
-            val action = PredictionFragmentDirections.actionPredictionFragmentToTimetableFragment(route ="Szeged - Budapest-Nyugati", date = "2023-11-26")
+            val startDestination = startDestinationSpinner.selectedItem.toString()
+            val endDestination = endDestinationSpinner.selectedItem.toString()
+            val date = getTodaysDate()
+            date.set(Calendar.YEAR, yearSelected)
+            date.set(Calendar.MONTH, monthSelected)
+            date.set(Calendar.DAY_OF_MONTH, daySelected)
+            val timeInMillis = date.timeInMillis.toString()
+            val action = PredictionFragmentDirections.actionPredictionFragmentToTimetableFragment(
+                route = combineRouteEnds(
+                    start = startDestination,
+                    end = endDestination
+                ), dateInMillis = timeInMillis
+            )
             findNavController().navigate(action)
         }
 
@@ -80,6 +97,9 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ?.getLiveData<DatePickerFragment.DatePickerResult>(DATE_SELECTED_KEY)
             ?.observe(viewLifecycleOwner) {
                 Log.d("DEMO", "DATUM VALSZTVA" + it.toString())
+                yearSelected = it.year
+                monthSelected = it.month
+                daySelected = it.dayOfMonth
             }
 
         lifecycleScope.launch {
@@ -98,13 +118,15 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             is PredictionUIState.RoutesLoaded -> {
                 uiState.routeDestinationMap?.let { setStartDestinationValues(routeDestinationMap = it) }
             }
+
             is PredictionUIState.TrainNumberSelected -> {
             }
+
             is PredictionUIState.Error -> {}
         }
     }
 
-    private fun setStartDestinationValues(routeDestinationMap: RouteDestinationMap){
+    private fun setStartDestinationValues(routeDestinationMap: RouteDestinationMap) {
         Log.d("DEMO", "setStartDestinationValues: " + routeDestinationMap.toString())
         this.routeDestinationMap = routeDestinationMap
         val startdestinations = routeDestinationMap.startDestinations.keys.toList()
@@ -122,9 +144,10 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         startDestinationSpinner.onItemSelectedListener = this
     }
 
-    private fun setEndDestinationValues(selectedStartDestination: String){
+    private fun setEndDestinationValues(selectedStartDestination: String) {
         Log.d("DEMO", "setEndDestinationValues: " + selectedStartDestination.toString())
-        val endDestinations = routeDestinationMap.startDestinations.getOrDefault(selectedStartDestination, listOf())
+        val endDestinations =
+            routeDestinationMap.startDestinations.getOrDefault(selectedStartDestination, listOf())
         context?.let {
             ArrayAdapter(
                 it,

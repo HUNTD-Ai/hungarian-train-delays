@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.huntdai.hungariantraindelays.data.DataSourceError
 import com.huntdai.hungariantraindelays.data.DataSourceResult
-import com.huntdai.hungariantraindelays.data.network.StatsDataSource
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.StatsDataSource
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.ui.models.Route
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 import dagger.hilt.android.lifecycle.HiltViewModel

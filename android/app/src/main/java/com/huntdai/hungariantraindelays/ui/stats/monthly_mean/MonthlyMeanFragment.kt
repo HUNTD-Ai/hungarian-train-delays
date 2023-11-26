@@ -13,7 +13,7 @@ import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 import com.huntdai.hungariantraindelays.databinding.FragmentMonthlyMeanBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

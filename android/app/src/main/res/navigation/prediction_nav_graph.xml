@@ -9,5 +9,45 @@
         android:id="@+id/predictionFragment"
         android:name="com.huntdai.hungariantraindelays.ui.prediction.PredictionFragment"
         android:label="fragment_prediction"
-        tools:layout="@layout/fragment_prediction" />
+        tools:layout="@layout/fragment_prediction" >
+        <action
+            android:id="@+id/action_predictionFragment_to_datePickerFragment"
+            app:destination="@id/datePickerFragment" />
+        <action
+            android:id="@+id/action_predictionFragment_to_timetableFragment"
+            app:destination="@id/timetableFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/datePickerFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.prediction.date_picker.DatePickerFragment"
+        android:label="DatePickerFragment" />
+    <fragment
+        android:id="@+id/timetableFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.prediction.timetable.TimetableFragment"
+        android:label="TimetableFragment" >
+        <argument
+            android:name="route"
+            app:argType="string" />
+        <argument
+            android:name="dateInMillis"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_timetableFragment_to_predictionResultFragment"
+            app:destination="@id/predictionResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/predictionResultFragment"
+        android:name="com.huntdai.hungariantraindelays.ui.prediction.prediction_result.PredictionResultFragment"
+        android:label="fragment_prediction_result"
+        tools:layout="@layout/fragment_prediction_result" >
+        <argument
+            android:name="route"
+            app:argType="string" />
+        <argument android:name="departureTime" />
+        <argument
+            android:name="trainNumber"
+            app:argType="string" />
+        <argument android:name="departureDateInMillis"
+            app:argType="string" />
+    </fragment>
 </navigation>

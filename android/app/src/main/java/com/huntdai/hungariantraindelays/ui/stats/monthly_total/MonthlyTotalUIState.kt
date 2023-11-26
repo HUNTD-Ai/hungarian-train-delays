@@ -1,6 +1,6 @@
 package com.huntdai.hungariantraindelays.ui.stats.monthly_total
 
-import com.huntdai.hungariantraindelays.data.network.models.Delay
+import com.huntdai.hungariantraindelays.data.network.stats.models.Delay
 
 sealed class MonthlyTotalUIState  {
     object Initial : MonthlyTotalUIState()

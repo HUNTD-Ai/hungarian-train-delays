@@ -79,3 +79,21 @@ export type DelayStat = {
   timestamp: Date;
   delay: number;
 };
+
+export type HighestDelayRequest = {
+  startTimestamp: Date;
+  endTimestamp: Date;
+};
+
+export type MeanDelaysPerRouteRequest = {
+  route: string;
+  startTimestamp: Date;
+  endTimestamp: Date;
+};
+
+export type MeanDelaysPerRouteResponse = {
+  route: string;
+  delays: {
+    delays: Array<DelayStat>;
+  };
+};

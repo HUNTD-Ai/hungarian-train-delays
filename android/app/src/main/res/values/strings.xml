@@ -4,6 +4,7 @@
     <string name="title_prediction">Prediction</string>
     <string name="title_stats">Statistics</string>
     <string name="title_about">About</string>
+    <string name="generic_error">An error occured during the loading of data.</string>
 
 
     <string-array name="time_period_array">

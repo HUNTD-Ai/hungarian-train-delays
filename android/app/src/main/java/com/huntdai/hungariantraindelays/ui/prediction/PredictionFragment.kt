@@ -30,10 +30,9 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private val viewModel: PredictionViewModel by viewModels()
     private lateinit var startDestinationSpinner: Spinner
     private lateinit var endDestinationSpinner: Spinner
-    private lateinit var trainNumber: TextView
+    private lateinit var selectedDate: TextView
     private lateinit var selectDateButton: Button
-    private lateinit var selectTrainNumberButton: Button
-    private lateinit var predictButton: Button
+    private lateinit var selectTrainToPredictButton: Button
 
     private var yearSelected by Delegates.notNull<Int>()
     private var monthSelected by Delegates.notNull<Int>()
@@ -51,12 +50,11 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentPredictionBinding.inflate(layoutInflater)
-        selectTrainNumberButton = binding.selectTrainNumberButton
-        selectDateButton = binding.selectDateButton
-        predictButton = binding.predictButton
         startDestinationSpinner = binding.startdestinationSpinner
         endDestinationSpinner = binding.enddestinationSpinner
-        trainNumber = binding.trainnumberText
+        selectDateButton = binding.selectDateButton
+        selectedDate = binding.selectedDateText
+        selectTrainToPredictButton = binding.selectTrainToPredictButton
         return binding.root
     }
 
@@ -67,13 +65,15 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         yearSelected = todaysDate.get(Calendar.YEAR)
         monthSelected = todaysDate.get(Calendar.MONTH)
         daySelected = todaysDate.get(Calendar.DAY_OF_MONTH)
+        val newSelectedDate = "$yearSelected-$monthSelected-$daySelected"
+        selectedDate.text = newSelectedDate
 
         selectDateButton.setOnClickListener {
             Log.d("DEMO", "NAV SELECT DATE")
             findNavController().navigate(R.id.action_predictionFragment_to_datePickerFragment)
         }
 
-        selectTrainNumberButton.setOnClickListener {
+        selectTrainToPredictButton.setOnClickListener {
             Log.d("DEMO", "nav timetable")
             val startDestination = startDestinationSpinner.selectedItem.toString()
             val endDestination = endDestinationSpinner.selectedItem.toString()
@@ -100,6 +100,9 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 yearSelected = it.year
                 monthSelected = it.month
                 daySelected = it.dayOfMonth
+
+                val newSelectedDate = "$yearSelected-$monthSelected-$daySelected"
+                selectedDate.text = newSelectedDate
             }
 
         lifecycleScope.launch {

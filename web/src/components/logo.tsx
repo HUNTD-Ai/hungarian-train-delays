@@ -10,9 +10,14 @@ const Logo = () => {
   return (
     <div
       id="logo"
-      className="flex h-full cursor-default items-center px-8"
+      className="flex h-full w-full cursor-default items-center gap-x-2 px-4 sm:w-auto sm:px-8"
       onClick={() => navigateToHome()}>
-      <span className="text-textColor text-xl font-bold">HUNTD-Ai</span>
+      <img
+        src="/logo.png"
+        alt="logo"
+        className="hidden h-12 w-12 sm:block"
+      />
+      <span className="text-xl font-bold text-textColor">HUNTD-Ai</span>
     </div>
   );
 };

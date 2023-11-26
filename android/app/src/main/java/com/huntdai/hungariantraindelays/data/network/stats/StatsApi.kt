@@ -1,12 +1,16 @@
 package com.huntdai.hungariantraindelays.data.network.stats
 
 import com.huntdai.hungariantraindelays.data.network.stats.models.body.HighestDelayInTimePeriodBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.LiveDataBody
 import com.huntdai.hungariantraindelays.data.network.stats.models.body.MeanRouteDelayBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.body.TimetableBody
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.LiveDataResponse
 import com.huntdai.hungariantraindelays.data.network.stats.models.response.MeanRouteDelayResponse
 import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyHighestDelayResponse
 import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyMeanDelayResponse
 import com.huntdai.hungariantraindelays.data.network.stats.models.response.MonthlyTotalDelayResponse
 import com.huntdai.hungariantraindelays.data.network.stats.models.response.RoutesResponse
+import com.huntdai.hungariantraindelays.data.network.stats.models.response.TimetableResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -31,5 +35,11 @@ interface StatsApi {
 
     @POST("mean-route-delay")
     suspend fun getMeanRouteDelay(@Body body: MeanRouteDelayBody): Response<MeanRouteDelayResponse>
+
+    @POST("timetable")
+    suspend fun getTimetable(@Body body: TimetableBody): Response<TimetableResponse>
+
+    @POST("live")
+    suspend fun getLiveData(@Body body: LiveDataBody): Response<LiveDataResponse>
 
 }

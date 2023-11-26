@@ -124,7 +124,8 @@ const StatisticsPage = () => {
         <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
           <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
             <span className="text-lg font-semibold">
-              Monthly mean delays ({monthlyMeans[0].timestamp.getFullYear()})
+              Monthly mean delays - {monthlyMeans[0].timestamp.getFullYear()}{' '}
+              (minutes)
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">
@@ -152,7 +153,8 @@ const StatisticsPage = () => {
         <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
           <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
             <span className="text-lg font-semibold">
-              Total delay per month ({monthlySum[0].timestamp.getFullYear()})
+              Total delay per month - {monthlySum[0].timestamp.getFullYear()}{' '}
+              (minutes)
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">
@@ -180,13 +182,16 @@ const StatisticsPage = () => {
         <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
           <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
             <span className="text-lg font-semibold">
-              Highest delays (last 7 days)
+              Highest delays - past 7 days (minutes)
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">
             <Bar
               data={{
-                labels: highestDelays7Days.map(x => x.timestamp.toDateString()),
+                labels: highestDelays7Days.map(x => {
+                  const [, ...rest] = x.timestamp.toDateString().split(' ');
+                  return rest.join(' ');
+                }),
                 datasets: [
                   {
                     label: 'Total delay per month',
@@ -208,15 +213,16 @@ const StatisticsPage = () => {
         <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
           <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
             <span className="text-lg font-semibold">
-              Highest delays (past 30 days)
+              Highest delays - past 30 days (minutes)
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">
             <Bar
               data={{
-                labels: highestDelays30Days.map(x =>
-                  x.timestamp.toDateString(),
-                ),
+                labels: highestDelays30Days.map(x => {
+                  const [, ...rest] = x.timestamp.toDateString().split(' ');
+                  return rest.join(' ');
+                }),
                 datasets: [
                   {
                     label: 'Total delay per month',
@@ -237,7 +243,7 @@ const StatisticsPage = () => {
       <div className="flex w-full flex-col rounded-[25px] bg-cardBackgroundLight drop-shadow-md dark:bg-cardBackgroundDark sm:w-[512px] md:w-[640px] lg:w-[768px]">
         <div className="flex h-12 w-full items-center rounded-t-[25px] bg-primaryColor px-6 sm:px-12">
           <span className="text-lg font-semibold">
-            Mean delays per route {route != null ? '(' + route.value + ')' : ''}
+            Mean delays per route (minutes)
           </span>
         </div>
         <div className="flex flex-col items-center gap-y-[9px] px-4 py-3 sm:h-72 sm:gap-y-[18px] sm:px-8 sm:py-6 md:h-96 lg:h-[448px]">
@@ -276,7 +282,12 @@ const StatisticsPage = () => {
           {delaysPerRoute != null && (
             <Bar
               data={{
-                labels: delaysPerRoute.map(x => x.timestamp.toDateString()),
+                labels: delaysPerRoute.map(
+                  x =>
+                    x.timestamp.toDateString().split(' ')[1] +
+                    ' ' +
+                    x.timestamp.toDateString().split(' ')[3],
+                ),
                 datasets: [
                   {
                     data: delaysPerRoute.map(x => x.delay),

@@ -4,7 +4,22 @@ import { TrainDelayApi } from '../apis/train-delay-api.ts';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { Month } from '../models/month.ts';
+
 ChartJS.register(...registerables);
+
+const chartOptions = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+};
 
 const StatisticsPage = () => {
   const [monthlyMeans, setMonthlyMeans] = useState<Array<DelayStat> | null>(
@@ -54,14 +69,7 @@ const StatisticsPage = () => {
                   },
                 ],
               }}
-              options={{
-                responsive: true,
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                  },
-                },
-              }}
+              options={chartOptions}
             />
           </div>
         </div>
@@ -89,14 +97,7 @@ const StatisticsPage = () => {
                   },
                 ],
               }}
-              options={{
-                responsive: true,
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                  },
-                },
-              }}
+              options={chartOptions}
             />
           </div>
         </div>

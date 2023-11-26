@@ -7,6 +7,11 @@ import {
   PredictionRequest,
   PredictionResponse,
   LiveDataResponse,
+  DelayStat,
+  StatResponse,
+  HighestDelayRequest,
+  MeanDelaysPerRouteRequest,
+  MeanDelaysPerRouteResponse,
 } from '../models/models.ts';
 
 export const TrainDelayApi = {
@@ -123,6 +128,97 @@ export const TrainDelayApi = {
         },
       );
       return await response.json();
+    } catch (e) {
+      return null;
+    }
+  },
+  getMonthlyMean: async (): Promise<Array<DelayStat> | null> => {
+    try {
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/monthly-mean',
+      );
+      const statResponse: StatResponse = await response.json();
+      return statResponse.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
+    } catch (e) {
+      return null;
+    }
+  },
+  getMonthlySums: async (): Promise<Array<DelayStat> | null> => {
+    try {
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/monthly-sum',
+      );
+      const statResponse: StatResponse = await response.json();
+      return statResponse.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
+    } catch (e) {
+      return null;
+    }
+  },
+  getHighestDelay: async (days: number): Promise<Array<DelayStat> | null> => {
+    try {
+      const start = new Date();
+      const end = new Date();
+      start.setDate(end.getDate() - days);
+
+      const input: HighestDelayRequest = {
+        startTimestamp: start,
+        endTimestamp: end,
+      };
+
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/highest-delay',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(input),
+        },
+      );
+      const statResponse: StatResponse = await response.json();
+      return statResponse.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
+    } catch (e) {
+      return null;
+    }
+  },
+  getMeanDelaysPerRoute: async (
+    route: string,
+  ): Promise<Array<DelayStat> | null> => {
+    try {
+      const start = new Date();
+      const end = new Date();
+      start.setMonth(1);
+
+      const input: MeanDelaysPerRouteRequest = {
+        route: route,
+        startTimestamp: start,
+        endTimestamp: end,
+      };
+
+      const response = await fetch(
+        ApiConstants.CORE_BASE_URL + '/stats/mean-route-delay',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(input),
+        },
+      );
+      const statResponse: MeanDelaysPerRouteResponse = await response.json();
+      return statResponse.delays.delays.map(x => ({
+        timestamp: new Date(x.timestamp),
+        delay: x.delay,
+      }));
     } catch (e) {
       return null;
     }

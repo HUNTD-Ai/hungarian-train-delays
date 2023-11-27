@@ -19,10 +19,22 @@
     <string name="selected_date">Selected date:</string>
     <string name="prediction_result_title">Prediction results</string>
     <string name="prediction_result_info_title">Train info</string>
+    <string name="about_title">About us</string>
     <string name="most_probable_cause_of_delay">Most probable cause of delay:</string>
     <string name="another_prediction">Another prediction</string>
     <string name="selected_date_is_invalid">Can\'t select dates from the past for prediction</string>
+    <string name="first_paragraph">As frequent users of public transport systems, we find delays inconvenient. However delays are to some degree unavoidable. No system can operate without mistakes, let alone one that spans a whole country with countless physical locations. Inherent difficulties aside, we have noticed patterns in these delays, just by using them frequently. This got us wandering if we could avoid the routes or trains that are consistently delayed. This lead us on a journey to create a model that could predict these delays.</string>
+    <string name="second_paragraph">To develop the model, we had to dig deep into the data, which gave us unique insight into the realities of train delays. We decided to incorporate some of these enlightening statistics into our application. Although our initial motivation was selfish, we hope to provide our users (and maybe even the infrastructure operators) these same insights, to better understand the problems and hopefully be able to identify the potential weak points of the system.</string>
+    <string name="contributors_label">Contributors:</string>
+    <string name="adam_kapus">Ádám Kapus</string>
+    <string name="martin_lenyi">Martin Lényi</string>
+    <string name="mate_debreczeni">Máté Debreczeni</string>
+    <string name="open_source">This project is open source, you can find the source code:</string>
 
+    <string name="adamkapus_github_link"><a href="https://www.github.com/adamkapus">@adamkapus</a></string>
+    <string name="martin_lenyi_github_link"><a href="https://www.github.com/tuku13">@tuku13</a></string>
+    <string name="mate_debreczeni_github_link"><a href="https://www.github.com/jazzysnake">@jazzysnake</a></string>
+    <string name="open_source_link"><a href="https://github.com/HUNTD-Ai/hungarian-train-delays/">here</a></string>
 
     <string-array name="time_period_array">
         <item>Past week</item>

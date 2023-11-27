@@ -20,6 +20,8 @@
     <string name="prediction_result_title">Prediction results</string>
     <string name="prediction_result_info_title">Train info</string>
     <string name="most_probable_cause_of_delay">Most probable cause of delay:</string>
+    <string name="another_prediction">Another prediction</string>
+    <string name="selected_date_is_invalid">Can\'t select dates from the past for prediction</string>
 
 
     <string-array name="time_period_array">

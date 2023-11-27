@@ -23,6 +23,7 @@ import com.huntdai.hungariantraindelays.ui.prediction.date_picker.DatePickerFrag
 import com.huntdai.hungariantraindelays.utils.combineRouteEnds
 import com.huntdai.hungariantraindelays.utils.createDateString
 import com.huntdai.hungariantraindelays.utils.getTodaysDate
+import com.huntdai.hungariantraindelays.utils.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -47,6 +48,7 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var yearSelected by Delegates.notNull<Int>()
     private var monthSelected by Delegates.notNull<Int>()
     private var daySelected by Delegates.notNull<Int>()
+//    private var handledInvalidDate = false
 
 
     private lateinit var routeDestinationMap: RouteDestinationMap
@@ -113,12 +115,31 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
             ?.getLiveData<DatePickerFragment.DatePickerResult>(DATE_SELECTED_KEY)
             ?.observe(viewLifecycleOwner) {
                 Log.d("DEMO", "DATUM VALSZTVA" + it.toString())
-                yearSelected = it.year
-                monthSelected = it.month
-                daySelected = it.dayOfMonth
 
-                val newSelectedDate = createDateString(year = yearSelected, month = (monthSelected + 1), day = daySelected)
-                selectedDate.text = newSelectedDate
+
+                val currentDate = getTodaysDate()
+                val newDate = Calendar.getInstance()
+                newDate.set(Calendar.YEAR, it.year)
+                newDate.set(Calendar.MONTH, it.month)
+                newDate.set(Calendar.DAY_OF_MONTH, it.dayOfMonth)
+                newDate.set(Calendar.HOUR_OF_DAY, 0)
+                newDate.set(Calendar.MINUTE, 0)
+                newDate.set(Calendar.SECOND, 0)
+                newDate.set(Calendar.MILLISECOND, 0)
+                Log.d("DEMO", "CURENTDATE" + currentDate.toString())
+                Log.d("DEMO", "newdate" + newDate.toString())
+                if( newDate.timeInMillis >= currentDate.timeInMillis ){
+                    yearSelected = it.year
+                    monthSelected = it.month
+                    daySelected = it.dayOfMonth
+
+                    val text = createDateString(year = yearSelected, month = (monthSelected + 1), day = daySelected)
+                    selectedDate.text = text
+                }
+//                else if(!handledInvalidDate){
+////                    showSnackbar(R.string.selected_date_is_invalid)
+////                    handledInvalidDate =
+//                }
             }
 
         lifecycleScope.launch {

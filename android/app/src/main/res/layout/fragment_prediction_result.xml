@@ -11,6 +11,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -79,6 +80,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/prediction_layout"
@@ -99,7 +101,7 @@
             android:id="@+id/live_info_available"
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:textSize="@dimen/smallText"
+            android:textSize="@dimen/mediumText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
@@ -118,6 +120,49 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:id="@+id/live_delay_cause_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Departure time:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/departuretime_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Arrival time:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/arrivaltime_text"
             android:layout_margin="@dimen/smallLayoutMargin"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
@@ -175,6 +220,7 @@
         android:id="@+id/another_prediction_button"
         style="@style/Theme.HungarianTrainDelays"
         android:textSize="@dimen/smallButtonText"
+        android:text="@string/another_prediction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"

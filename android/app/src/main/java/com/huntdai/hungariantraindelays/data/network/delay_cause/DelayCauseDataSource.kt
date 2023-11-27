@@ -35,7 +35,7 @@ class DelayCauseDataSource @Inject constructor(private val delayCauseApi: DelayC
                 } else {
                     DataSourceError
                 }
-            } catch (error: IOException) {
+            } catch (error: Exception) {
                 Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }

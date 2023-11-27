@@ -32,6 +32,8 @@ class PredictionResultFragment : Fragment() {
     private lateinit var liveDelay: TextView
     private lateinit var liveCause: TextView
 
+    private lateinit var departureText: TextView
+    private lateinit var arrivalText: TextView
     private lateinit var routeText: TextView
     private lateinit var trainNumberText: TextView
 
@@ -48,6 +50,7 @@ class PredictionResultFragment : Fragment() {
     private val args: PredictionResultFragmentArgs by navArgs()
     private lateinit var route: String
     private lateinit var departureTime: String
+    private lateinit var arrivalTime: String
     private lateinit var departureDateInMillis: String
     private lateinit var trainNumber: String
 
@@ -64,6 +67,8 @@ class PredictionResultFragment : Fragment() {
         liveDelay = binding.liveDelayTimeText
         liveCause = binding.liveDelayCauseText
 
+        departureText = binding.departuretimeText
+        arrivalText = binding.arrivaltimeText
         routeText = binding.routeText
         trainNumberText = binding.trainnumberText
 
@@ -80,6 +85,7 @@ class PredictionResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         route = args.route
         departureTime = args.departureTime
+        arrivalTime = args.arrivalTime
         trainNumber = args.trainNumber
         departureDateInMillis = args.departureDateInMillis
 
@@ -178,8 +184,10 @@ class PredictionResultFragment : Fragment() {
             liveDelay.visibility = View.VISIBLE
             liveCause.visibility = View.VISIBLE
 
-            liveDelay.text = uiState.liveDelayTime
-            liveCause.text = uiState.liveDelayCause
+            val delayText = "Delay time: " + uiState.liveDelayTime + " minutes"
+            liveDelay.text = delayText
+            val causeText = "Delay cause: " + uiState.liveDelayCause
+            liveCause.text = causeText
         }
         else{
             val text = "Live data not available"
@@ -189,6 +197,8 @@ class PredictionResultFragment : Fragment() {
             liveCause.visibility = View.GONE
         }
 
+        departureText.text = departureTime
+        arrivalText.text = arrivalTime
         routeText.text = route
         trainNumberText.text = trainNumber
     }

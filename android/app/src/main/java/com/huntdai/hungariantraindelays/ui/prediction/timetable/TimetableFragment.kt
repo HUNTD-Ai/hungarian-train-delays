@@ -124,6 +124,7 @@ class TimetableFragment : Fragment() {
         val action = TimetableFragmentDirections.actionTimetableFragmentToPredictionResultFragment(
             route = trainDeparture.route,
             departureTime = trainDeparture.departureTime,
+            arrivalTime = trainDeparture.arrivalTime,
             trainNumber = trainDeparture.trainNumber,
             departureDateInMillis = dateInMillis
         )

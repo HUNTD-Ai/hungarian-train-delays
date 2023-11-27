@@ -6,6 +6,11 @@
     <string name="title_about">About</string>
     <string name="generic_error">An error occured during the loading of data.</string>
 
+    <string name="monthly_mean_delays">Monthly mean delays - 2023</string>
+    <string name="total_delays">Total delay per month - 2023</string>
+    <string name="highest_delays">Highest delays</string>
+    <string name="mean_delays_per_route">Mean delays per route </string>
+
 
     <string-array name="time_period_array">
         <item>Past week</item>

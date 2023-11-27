@@ -7,46 +7,44 @@
     tools:context=".ui.stats.StatsFragment">
 
     <Button
+        style="@style/Theme.HungarianTrainDelays"
         android:id="@+id/mean_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Mean delays per month" />
-
-    <Button
-        android:id="@+id/total_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Total delays per month" />
-
-    <Button
-        android:id="@+id/highest_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Highest delays per month" />
-
-    <Button
-        android:id="@+id/mean_per_route_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Mean delays per route" />
-
-    <androidx.cardview.widget.CardView
+        android:textSize="@dimen/statsTitleText"
+        android:layout_margin="@dimen/defaultLayoutMargin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/monthly_mean_delays" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="I'm a title"
-                />
+    <Button
+        style="@style/Theme.HungarianTrainDelays"
+        android:id="@+id/total_button"
+        android:textSize="@dimen/statsTitleText"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/total_delays" />
 
-    </androidx.cardview.widget.CardView>
+    <Button
+        style="@style/Theme.HungarianTrainDelays"
+        android:id="@+id/highest_button"
+        android:textSize="@dimen/statsTitleText"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/highest_delays" />
 
+    <Button
+        style="@style/Theme.HungarianTrainDelays"
+        android:id="@+id/mean_per_route_button"
+        android:textSize="@dimen/statsTitleText"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/mean_delays_per_route" />
 
 
 </LinearLayout>

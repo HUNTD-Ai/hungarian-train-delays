@@ -8,6 +8,8 @@
 
     <TextView
         android:id="@+id/title"
+        android:text = "@string/mean_delays_per_route"
+        android:textSize="@dimen/statsTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"
@@ -65,8 +67,9 @@
 
 
     <Button
+        style="@style/Theme.HungarianTrainDelays"
         android:id="@+id/show_delays_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"
         android:text="Show delays"

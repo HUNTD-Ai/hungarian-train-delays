@@ -23,8 +23,6 @@ class StatsFragment : Fragment() {
     private lateinit var highestButton: Button
     private lateinit var meanPerRouteButton: Button
 
-    private val viewModel: StatsViewModel by viewModels()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,7 +30,7 @@ class StatsFragment : Fragment() {
         val binding = FragmentStatsBinding.inflate(layoutInflater)
         meanButton = binding.meanButton
         totalButton = binding.totalButton
-        highestButton= binding.highestButton
+        highestButton = binding.highestButton
         meanPerRouteButton = binding.meanPerRouteButton
         return binding.root
     }
@@ -56,24 +54,6 @@ class StatsFragment : Fragment() {
             findNavController().navigate(R.id.action_statsFragment_to_meanPerRouteFragment)
         }
 
-        lifecycleScope.launch {
-            viewModel.uiState.collect {
-                render(it)
-            }
-        }
-        viewModel.initUiState()
-    }
-
-    private fun render(uiState: StatsUIState) {
-        when (uiState) {
-            is StatsUIState.Initial -> {}
-            is StatsUIState.Demo -> {
-                Log.d("DEMO", uiState.routes.toString())
-            }
-            is StatsUIState.MonthlyHighestSelected -> {}
-            is StatsUIState.MonthlyMeanSelected -> {}
-            is StatsUIState.MonthlySumSelected -> {}
-        }
     }
 
 }

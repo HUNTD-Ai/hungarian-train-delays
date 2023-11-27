@@ -2,5 +2,5 @@
 <resources>
     <dimen name="defaultLayoutMargin">18dp</dimen>
     <dimen name="smallLayoutMargin">4dp</dimen>
-    <dimen name="statsTitleText">30dp</dimen>
+    <dimen name="statsTitleText">18sp</dimen>
 </resources>

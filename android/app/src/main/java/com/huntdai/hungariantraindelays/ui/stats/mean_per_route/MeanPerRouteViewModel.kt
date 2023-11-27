@@ -83,10 +83,6 @@ class MeanPerRouteViewModel @Inject constructor(
         isLoading.update { false }
     }
 
-    fun errorHandled() = viewModelScope.launch {
-        isError.update { false }
-    }
-
     fun loadDelays(startDestination: String, endDestination: String) = viewModelScope.launch {
         isLoading.update { true }
         when (val response = statsDataSource.getMeanRouteDelay(

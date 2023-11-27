@@ -43,7 +43,6 @@ class MonthlyMeanFragment : Fragment() {
         chart = binding.chart
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
-        //binding.title.text = "Monthly mean delays"
         setupChart()
         return binding.root
     }

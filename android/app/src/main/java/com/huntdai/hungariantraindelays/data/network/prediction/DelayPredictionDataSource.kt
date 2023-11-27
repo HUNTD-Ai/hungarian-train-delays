@@ -29,9 +29,7 @@ class DelayPredictionDataSource @Inject constructor(private val delayPredictionA
                     trainNumber = trainNumber.toString(),
                     departureTime = departureTime
                 )
-                Log.d("DEMO", "BODYDELAYPRED" + body.toString())
                 val response = delayPredictionApi.predictDelay(body)
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
@@ -42,7 +40,6 @@ class DelayPredictionDataSource @Inject constructor(private val delayPredictionA
                     DataSourceError
                 }
             } catch (error: Exception) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }

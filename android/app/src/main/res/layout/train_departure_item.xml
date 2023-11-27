@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallLayoutMargin"
             android:textSize="@dimen/smallText"
-            android:text="Departure:"
+            android:text="@string/departure"
             />
 
         <TextView
@@ -42,7 +42,7 @@
             android:textSize="@dimen/smallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Arrival:"
+            android:text="@string/arrival"
             />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallLayoutMargin"
             android:textSize="@dimen/smallText"
-            android:text="Duration:"
+            android:text="@string/duration"
             />
 
         <TextView
@@ -94,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallLayoutMargin"
             android:textSize="@dimen/smallText"
-            android:text="Train number:"
+            android:text="@string/train_number"
             />
 
         <TextView
@@ -110,7 +110,7 @@
 
     <Button
         android:id="@+id/predict_button"
-        android:text="Predict"
+        android:text="@string/predict"
         style="@style/Theme.HungarianTrainDelays"
         android:textSize="@dimen/bigButtonText"
         android:layout_margin="@dimen/smallLayoutMargin"

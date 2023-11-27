@@ -35,6 +35,15 @@
     <string name="martin_lenyi_github_link"><a href="https://www.github.com/tuku13">@tuku13</a></string>
     <string name="mate_debreczeni_github_link"><a href="https://www.github.com/jazzysnake">@jazzysnake</a></string>
     <string name="open_source_link"><a href="https://github.com/HUNTD-Ai/hungarian-train-delays/">here</a></string>
+    <string name="experiencing_delays">Experiencing delays:</string>
+    <string name="departure_time">Departure time:</string>
+    <string name="arrival_time">Arrival time:</string>
+    <string name="route">Route:</string>
+    <string name="train_number">Train number:</string>
+    <string name="departure">Departure:</string>
+    <string name="arrival">Arrival:</string>
+    <string name="duration">Duration:</string>
+    <string name="predict">Predict</string>
 
     <string-array name="time_period_array">
         <item>Past week</item>

@@ -31,7 +31,7 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text = "Experiencing delays:"
+            android:text = "@string/experiencing_delays"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text = "Departure time:"
+            android:text = "@string/departure_time"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text = "Arrival time:"
+            android:text = "@string/arrival_time"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text = "Route:"
+            android:text = "@string/route"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
         <TextView
             style="@style/Theme.HungarianTrainDelays"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text = "Train number:"
+            android:text = "@string/train_number"
             android:textSize="@dimen/smallText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -61,7 +61,7 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
         errorText = binding.errorText
         fromGroup = binding.fromLayout
         toGroup = binding.toLayout
-        binding.title.text = "Mean delays per route"
+        //binding.title.text = "Mean delays per route"
         setupChart()
         return binding.root
     }

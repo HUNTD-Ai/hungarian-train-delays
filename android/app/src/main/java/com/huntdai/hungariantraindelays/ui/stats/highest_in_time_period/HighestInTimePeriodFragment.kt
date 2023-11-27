@@ -50,7 +50,7 @@ class HighestInTimePeriodFragment : Fragment(), AdapterView.OnItemSelectedListen
         spinner = binding.timePeriodSpinner
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
-        binding.title.text = "Highest delays"
+        //binding.title.text = "Highest delays"
         setupChart()
         setupSpinner()
         return binding.root

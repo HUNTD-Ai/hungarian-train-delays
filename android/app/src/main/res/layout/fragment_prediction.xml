@@ -1,69 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.prediction.PredictionFragment">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        android:text="@string/predict_title"
+        android:textSize="@dimen/statsTitleText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
+        android:id="@+id/fromLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/smallLayoutMargin"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
         <TextView
-            android:text="From:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/smallText"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text="@string/from" />
 
         <Spinner
             android:id="@+id/startdestination_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin" />
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/toLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="@dimen/smallLayoutMargin"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fromLayout">
 
         <TextView
-            android:text="To:"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textSize="@dimen/smallText"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text="@string/to" />
 
         <Spinner
             android:id="@+id/enddestination_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin" />
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/dateLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_margin="@dimen/smallLayoutMargin"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/smallText"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text="@string/selected_date" />
 
         <TextView
             android:id="@+id/selected_date_text"
-            android:text=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:id="@+id/select_date_button"
+            android:textSize="@dimen/smallText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pick date" />
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text="" />
+
+        <Button
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/select_date_button"
+            android:textSize="@dimen/smallButtonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text="@string/pick_date" />
 
 
     </LinearLayout>
 
     <Button
         android:id="@+id/select_train_to_predict_button"
-        android:text="Seelect train to predict"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/Theme.HungarianTrainDelays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        android:text="@string/select_train_to_predict"
+        android:textSize="@dimen/bigButtonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLayout" />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/load_progressbar"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:indeterminateTint="@android:color/darker_gray"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generic_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

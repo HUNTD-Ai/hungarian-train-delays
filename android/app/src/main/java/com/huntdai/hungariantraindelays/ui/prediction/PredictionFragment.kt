@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.viewModels
@@ -34,6 +36,13 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var selectDateButton: Button
     private lateinit var selectTrainToPredictButton: Button
 
+    private lateinit var loadProgressBar: ProgressBar
+    private lateinit var errorText: TextView
+
+    private lateinit var fromGroup: LinearLayout
+    private lateinit var toGroup: LinearLayout
+    private lateinit var dateGroup: LinearLayout
+
     private var yearSelected by Delegates.notNull<Int>()
     private var monthSelected by Delegates.notNull<Int>()
     private var daySelected by Delegates.notNull<Int>()
@@ -55,6 +64,12 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         selectDateButton = binding.selectDateButton
         selectedDate = binding.selectedDateText
         selectTrainToPredictButton = binding.selectTrainToPredictButton
+        loadProgressBar = binding.loadProgressbar
+        errorText = binding.errorText
+        fromGroup = binding.fromLayout
+        toGroup = binding.toLayout
+        dateGroup = binding.dateLayout
+
         return binding.root
     }
 
@@ -65,7 +80,7 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         yearSelected = todaysDate.get(Calendar.YEAR)
         monthSelected = todaysDate.get(Calendar.MONTH)
         daySelected = todaysDate.get(Calendar.DAY_OF_MONTH)
-        val newSelectedDate = "$yearSelected-$monthSelected-$daySelected"
+        val newSelectedDate = getDateString()
         selectedDate.text = newSelectedDate
 
         selectDateButton.setOnClickListener {
@@ -101,7 +116,7 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 monthSelected = it.month
                 daySelected = it.dayOfMonth
 
-                val newSelectedDate = "$yearSelected-$monthSelected-$daySelected"
+                val newSelectedDate = getDateString()
                 selectedDate.text = newSelectedDate
             }
 
@@ -113,19 +128,45 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         viewModel.initUiState()
     }
 
+    private fun hideInputElements() {
+        selectTrainToPredictButton.visibility = View.GONE
+        fromGroup.visibility = View.GONE
+        toGroup.visibility = View.GONE
+        dateGroup.visibility = View.GONE
+    }
+
+    private fun showInputElements() {
+        selectTrainToPredictButton.visibility = View.VISIBLE
+        fromGroup.visibility = View.VISIBLE
+        toGroup.visibility = View.VISIBLE
+        dateGroup.visibility = View.VISIBLE
+    }
+
     private fun render(uiState: PredictionUIState) {
         Log.d("DEMO", uiState.toString())
         when (uiState) {
-            is PredictionUIState.Initial -> {}
-            is PredictionUIState.Loading -> {}
-            is PredictionUIState.RoutesLoaded -> {
+            is PredictionUIState.Initial -> {
+                hideInputElements()
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.GONE
+            }
+            is PredictionUIState.Loading -> {
+                hideInputElements()
+                loadProgressBar.visibility = View.VISIBLE
+                errorText.visibility = View.GONE
+            }
+            is PredictionUIState.Loaded -> {
+                showInputElements()
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.GONE
                 uiState.routeDestinationMap?.let { setStartDestinationValues(routeDestinationMap = it) }
             }
 
-            is PredictionUIState.TrainNumberSelected -> {
+            is PredictionUIState.Error -> {
+                hideInputElements()
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.VISIBLE
             }
-
-            is PredictionUIState.Error -> {}
         }
     }
 
@@ -172,6 +213,10 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
+    }
+
+    private fun getDateString() : String{
+        return yearSelected.toString() + "-" + (monthSelected + 1).toString() + "-" + daySelected.toString()
     }
 
 

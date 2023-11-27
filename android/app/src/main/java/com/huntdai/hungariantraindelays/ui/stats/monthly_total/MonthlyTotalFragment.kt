@@ -45,7 +45,7 @@ class MonthlyTotalFragment : Fragment() {
         chart = binding.chart
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
-        binding.title.text = "Monthly total delays"
+        //binding.title.text = "Monthly total delays"
         setupChart()
         return binding.root
     }

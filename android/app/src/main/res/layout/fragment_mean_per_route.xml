@@ -8,11 +8,11 @@
 
     <TextView
         android:id="@+id/title"
-        android:text = "@string/mean_delays_per_route"
-        android:textSize="@dimen/statsTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"
+        android:text="@string/mean_delays_per_route"
+        android:textSize="@dimen/statsTitleText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text="From:" />
+            android:textSize="@dimen/smallText"
+            android:text="@string/from" />
 
         <Spinner
             android:id="@+id/startdestination_spinner"
@@ -55,7 +56,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/smallLayoutMargin"
-            android:text="To:" />
+            android:textSize="@dimen/smallText"
+            android:text="@string/to" />
 
         <Spinner
             android:id="@+id/enddestination_spinner"
@@ -67,12 +69,13 @@
 
 
     <Button
-        style="@style/Theme.HungarianTrainDelays"
         android:id="@+id/show_delays_button"
+        style="@style/Theme.HungarianTrainDelays"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"
-        android:text="Show delays"
+        android:text="@string/show_delays"
+        android:textSize="@dimen/bigButtonText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toLayout" />

@@ -3,4 +3,8 @@
     <dimen name="defaultLayoutMargin">18dp</dimen>
     <dimen name="smallLayoutMargin">4dp</dimen>
     <dimen name="statsTitleText">18sp</dimen>
+    <dimen name="smallButtonText">18sp</dimen>
+    <dimen name="bigButtonText">22sp</dimen>
+
+    <dimen name="smallText">14sp</dimen>
 </resources>

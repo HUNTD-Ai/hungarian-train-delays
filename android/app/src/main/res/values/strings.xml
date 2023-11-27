@@ -9,7 +9,14 @@
     <string name="monthly_mean_delays">Monthly mean delays - 2023</string>
     <string name="total_delays">Total delay per month - 2023</string>
     <string name="highest_delays">Highest delays</string>
-    <string name="mean_delays_per_route">Mean delays per route </string>
+    <string name="mean_delays_per_route">Mean delays per route</string>
+    <string name="predict_title">Delay prediction</string>
+    <string name="show_delays">Show delays</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="pick_date">Pick date</string>
+    <string name="select_train_to_predict">Select train to predict</string>
+    <string name="selected_date">Selected date:</string>
 
 
     <string-array name="time_period_array">

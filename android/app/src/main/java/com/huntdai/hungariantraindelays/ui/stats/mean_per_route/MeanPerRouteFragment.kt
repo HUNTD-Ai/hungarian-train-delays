@@ -61,7 +61,6 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
         errorText = binding.errorText
         fromGroup = binding.fromLayout
         toGroup = binding.toLayout
-        //binding.title.text = "Mean delays per route"
         setupChart()
         return binding.root
     }
@@ -141,11 +140,9 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setStartDestinationValues(routeDestinationMap: RouteDestinationMap) {
-        Log.d("DEMO", "setStartDestinationValues: " + routeDestinationMap.toString())
         this.routeDestinationMap = routeDestinationMap
         val startdestinations = routeDestinationMap.startDestinations.keys.toMutableList()
         startdestinations.sort()
-        //val startdestinationsList = startdestinations.toList()
         context?.let {
             ArrayAdapter(
                 it,
@@ -160,7 +157,6 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setEndDestinationValues(selectedStartDestination: String) {
-        Log.d("DEMO", "setEndDestinationValues: " + selectedStartDestination.toString())
         val endDestinations =
             routeDestinationMap.startDestinations.getOrDefault(selectedStartDestination, listOf())
         context?.let {
@@ -178,7 +174,6 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val selectedStartDestination = parent?.getItemAtPosition(position).toString()
-        Log.d("DEMO", "Lefutott: " + selectedStartDestination)
         setEndDestinationValues(selectedStartDestination)
     }
 

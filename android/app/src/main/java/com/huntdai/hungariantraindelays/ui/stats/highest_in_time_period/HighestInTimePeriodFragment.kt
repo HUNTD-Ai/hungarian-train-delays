@@ -50,7 +50,6 @@ class HighestInTimePeriodFragment : Fragment(), AdapterView.OnItemSelectedListen
         spinner = binding.timePeriodSpinner
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
-        //binding.title.text = "Highest delays"
         setupChart()
         setupSpinner()
         return binding.root
@@ -115,7 +114,6 @@ class HighestInTimePeriodFragment : Fragment(), AdapterView.OnItemSelectedListen
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d("DEMO", "Lefutott: " + fromInt<TimePeriod>(position).toString())
         when(val selectedTimePeriod = fromInt<TimePeriod>(position)) {
             TimePeriod.PAST_WEEK -> {populateChart(delays = delays, selectedTimePeriod = selectedTimePeriod)}
             TimePeriod.PAST_MONTH -> {populateChart(delays = delays, selectedTimePeriod = selectedTimePeriod)}

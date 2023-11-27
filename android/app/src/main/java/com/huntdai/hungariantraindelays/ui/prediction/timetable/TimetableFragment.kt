@@ -56,7 +56,6 @@ class TimetableFragment : Fragment() {
             day = date.get(Calendar.DAY_OF_MONTH)
         )
 
-        Log.d("DEMO", "TIMETABLEINFO ATVEVE" + route + dateString)
 
         loadProgressBar = binding.loadProgressbar
         errorText = binding.errorText
@@ -82,7 +81,6 @@ class TimetableFragment : Fragment() {
     }
 
     private fun render(uiState: TimetableUIState) {
-        Log.d("DEMO", "TIMETABLEINFO UISTATE" + uiState.toString())
         when (uiState) {
             is TimetableUIState.Initial -> {
                 rv.visibility = View.GONE

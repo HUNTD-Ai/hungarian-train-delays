@@ -13,9 +13,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class DelayCauseDataSource @Inject constructor(private val delayCauseApi: DelayCauseApi){
+class DelayCauseDataSource @Inject constructor(private val delayCauseApi: DelayCauseApi) {
 
-    suspend fun getDelayCause(route : String, trainNumber : Int, departureTime : String): DataSourceResponse<DelayCauseResponse> =
+    suspend fun getDelayCause(
+        route: String,
+        trainNumber: Int,
+        departureTime: String
+    ): DataSourceResponse<DelayCauseResponse> =
         withContext(Dispatchers.IO) {
             try {
                 val body = DelayCauseBody(
@@ -23,9 +27,7 @@ class DelayCauseDataSource @Inject constructor(private val delayCauseApi: DelayC
                     trainNumber = trainNumber.toString(),
                     departureTime = departureTime
                 )
-                Log.d("DEMO", "BODY" + body.toString())
                 val response = delayCauseApi.predictDelayCause(body)
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
@@ -36,7 +38,6 @@ class DelayCauseDataSource @Inject constructor(private val delayCauseApi: DelayC
                     DataSourceError
                 }
             } catch (error: Exception) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }

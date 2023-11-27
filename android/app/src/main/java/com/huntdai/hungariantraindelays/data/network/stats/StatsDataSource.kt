@@ -30,7 +30,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val response = statsApi.getRoutes()
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val routes = response.body()?.routes
                     if (routes != null) {
@@ -41,7 +40,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -80,7 +78,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val response = statsApi.getMonthlyMeanDelay()
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val delays = response.body()?.delays
                     if (delays != null) {
@@ -91,7 +88,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -100,7 +96,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val response = statsApi.getMonthlyTotalDelay()
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val delays = response.body()?.delays
                     if (delays != null) {
@@ -111,7 +106,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -144,9 +138,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     startTimestamp = previousUnix.toString(),
                     endTimestamp = todaysUnix.toString()
                 )
-                Log.d("DEMO", "BODY" + body.toString())
                 val response = statsApi.getHighestDelayInTimePeriod(body)
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val delays = response.body()?.delays
                     if (delays != null) {
@@ -157,7 +149,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -167,7 +158,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val today = getTodaysDate()
-                //today.set(Calendar.)
                 val todaysUnix = today.time.time
 
                 val nineMonthAgo = today
@@ -179,9 +169,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     startTimestamp = monthAgoUnix.toString(),
                     endTimestamp = todaysUnix.toString()
                 )
-                Log.d("DEMO", "BODY" + body.toString())
                 val response = statsApi.getMeanRouteDelay(body)
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val delays = response.body()?.delays?.delays
                     if (delays != null) {
@@ -192,7 +180,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -207,12 +194,9 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     route = route,
                     departureDate = departureDate
                 )
-                Log.d("DEMO", "BODY" + body.toString())
                 val response = statsApi.getTimetable(body)
-//                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val plans = response.body()?.plans
-                    Log.d("DEMO", "RESP" + response.toString())
                     if (plans != null) {
                         val trainDepartureList = mutableListOf<TrainDeparture>()
                         for (plan in plans) {
@@ -239,7 +223,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }
@@ -253,9 +236,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     route = route,
                     trainNumber = trainNumber
                 )
-                Log.d("DEMO", "BODY" + body.toString())
                 val response = statsApi.getLiveData(body)
-                Log.d("DEMO", "RESP" + response.toString())
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
@@ -266,7 +247,6 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                     DataSourceError
                 }
             } catch (error: IOException) {
-                Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }
         }

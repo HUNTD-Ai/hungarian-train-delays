@@ -34,8 +34,4 @@ class HighestInTimePeriodViewModel@Inject constructor(
             }
         }
     }
-
-//    fun timePeriodChanged() = viewModelScope.launch {
-//        statsDataSource.getHighestDelayInTimePeriod()
-//    }
 }

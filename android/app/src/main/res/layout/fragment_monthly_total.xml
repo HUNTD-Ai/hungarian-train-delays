@@ -8,33 +8,33 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_margin="@dimen/defaultLayoutMargin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart"
-        android:layout_margin="@dimen/defaultLayoutMargin"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_margin="@dimen/defaultLayoutMargin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-        <ProgressBar
-            android:id="@+id/load_progressbar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:indeterminateTint="@android:color/darker_gray"
-            android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/load_progressbar"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:indeterminateTint="@android:color/darker_gray"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <TextView
         android:id="@+id/error_text"

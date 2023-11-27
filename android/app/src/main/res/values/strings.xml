@@ -8,9 +8,8 @@
 
 
     <string-array name="time_period_array">
-        <item>Last week</item>
-        <item>Last month</item>
-        <item>Six months</item>
+        <item>Past week</item>
+        <item>Past month</item>
     </string-array>
 
 </resources>

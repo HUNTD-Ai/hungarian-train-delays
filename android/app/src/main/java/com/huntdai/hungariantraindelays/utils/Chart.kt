@@ -17,6 +17,16 @@ fun getMonthNameFromTimestamp(timestamp: Double): String {
     return dateFormat.format(calendar.time)
 }
 
+fun getMonthAndDayNameFromTimestamp(timestamp: Double): String {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = timestamp.toLong()
+
+    // Define the desired date format
+    val dateFormat = SimpleDateFormat("MMM d", Locale.ENGLISH)
+
+    return dateFormat.format(calendar.time)
+}
+
 fun getCurrentTextcolor(context: Context): Int {
     val typedArray = context.obtainStyledAttributes(
         R.style.Base_Theme_HungarianTrainDelays,

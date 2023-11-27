@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="defaultLayoutMargin">18dp</dimen>
+    <dimen name="smallLayoutMargin">4dp</dimen>
     <dimen name="statsTitleText">30dp</dimen>
 </resources>

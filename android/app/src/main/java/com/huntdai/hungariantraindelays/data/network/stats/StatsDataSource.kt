@@ -167,11 +167,12 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val today = getTodaysDate()
+                //today.set(Calendar.)
                 val todaysUnix = today.time.time
 
-                val monthAgo = today
-                monthAgo.add(Calendar.DATE, -30)
-                val monthAgoUnix = monthAgo.time.time
+                val nineMonthAgo = today
+                nineMonthAgo.add(Calendar.DATE, -270)
+                val monthAgoUnix = nineMonthAgo.time.time
 
                 val body = MeanRouteDelayBody(
                     route = combineRouteEnds(route.startDestination, route.endDestination),

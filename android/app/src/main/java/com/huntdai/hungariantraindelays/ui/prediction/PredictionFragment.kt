@@ -132,7 +132,8 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun setStartDestinationValues(routeDestinationMap: RouteDestinationMap) {
         Log.d("DEMO", "setStartDestinationValues: " + routeDestinationMap.toString())
         this.routeDestinationMap = routeDestinationMap
-        val startdestinations = routeDestinationMap.startDestinations.keys.toList()
+        val startdestinations = routeDestinationMap.startDestinations.keys.toMutableList()
+        startdestinations.sort()
         context?.let {
             ArrayAdapter(
                 it,

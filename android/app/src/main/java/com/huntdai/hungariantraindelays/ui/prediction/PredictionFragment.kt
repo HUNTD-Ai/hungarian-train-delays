@@ -21,6 +21,7 @@ import com.huntdai.hungariantraindelays.databinding.FragmentPredictionBinding
 import com.huntdai.hungariantraindelays.ui.models.RouteDestinationMap
 import com.huntdai.hungariantraindelays.ui.prediction.date_picker.DatePickerFragment
 import com.huntdai.hungariantraindelays.utils.combineRouteEnds
+import com.huntdai.hungariantraindelays.utils.createDateString
 import com.huntdai.hungariantraindelays.utils.getTodaysDate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -80,7 +81,7 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
         yearSelected = todaysDate.get(Calendar.YEAR)
         monthSelected = todaysDate.get(Calendar.MONTH)
         daySelected = todaysDate.get(Calendar.DAY_OF_MONTH)
-        val newSelectedDate = getDateString()
+        val newSelectedDate = createDateString(year = yearSelected, month = (monthSelected + 1), day = daySelected)
         selectedDate.text = newSelectedDate
 
         selectDateButton.setOnClickListener {
@@ -116,7 +117,7 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
                 monthSelected = it.month
                 daySelected = it.dayOfMonth
 
-                val newSelectedDate = getDateString()
+                val newSelectedDate = createDateString(year = yearSelected, month = (monthSelected + 1), day = daySelected)
                 selectedDate.text = newSelectedDate
             }
 
@@ -214,10 +215,5 @@ class PredictionFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
     }
-
-    private fun getDateString() : String{
-        return yearSelected.toString() + "-" + (monthSelected + 1).toString() + "-" + daySelected.toString()
-    }
-
 
 }

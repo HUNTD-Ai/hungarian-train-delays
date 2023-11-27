@@ -2,5 +2,5 @@ package com.huntdai.hungariantraindelays.data.network.delay_cause.models.respons
 
 data class DelayCauseResponse (
     val label : String,
-    val score : String
+    val score : Double
 )

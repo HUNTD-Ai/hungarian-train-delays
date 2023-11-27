@@ -203,7 +203,7 @@ class MeanPerRouteFragment : Fragment(), AdapterView.OnItemSelectedListener {
         labels = labels.map { it.take(3) }.toMutableList()
 
         val barDataSet = BarDataSet(entries, "Minutes")
-        barDataSet.color = ContextCompat.getColor(requireContext(), R.color.primary);
+        barDataSet.color = ContextCompat.getColor(requireContext(), R.color.primary)
         barDataSet.valueTextColor = getCurrentTextcolor(requireContext())
 
         val description = Description()

@@ -7,7 +7,7 @@
     tools:context=".ui.stats.mean_per_route.MeanPerRouteFragment">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_prediction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/smallLayoutMargin"
@@ -25,7 +25,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction">
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction" />
 
     <TextView
         android:id="@+id/error_text"

@@ -7,7 +7,8 @@
     tools:context=".ui.prediction.PredictionFragment">
 
     <TextView
-        android:id="@+id/title"
+        style="@style/Theme.HungarianTrainDelays"
+        android:id="@+id/title_prediction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/defaultLayoutMargin"
@@ -25,7 +26,7 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title">
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction">
 
         <TextView
             android:layout_width="wrap_content"
@@ -125,7 +126,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction"
         android:indeterminateTint="@android:color/darker_gray"
         android:visibility="gone" />
 
@@ -138,6 +139,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

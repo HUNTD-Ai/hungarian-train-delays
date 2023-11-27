@@ -10,3 +10,21 @@ fun getTodaysDate(): Calendar {
     today.set(Calendar.MILLISECOND, 0)
     return today
 }
+
+fun createDateString(year : Int, month : Int, day : Int): String{
+    val monthString = if(month < 10){
+        "0$month"
+    }
+    else{
+        month.toString()
+    }
+
+    val dayString = if(day < 10){
+        "0$day"
+    }
+    else{
+        day.toString()
+    }
+
+    return "$year-$monthString-$dayString"
+}

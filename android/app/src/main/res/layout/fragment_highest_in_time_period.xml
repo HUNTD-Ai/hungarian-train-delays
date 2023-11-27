@@ -7,7 +7,7 @@
     tools:context=".ui.stats.monthly_mean.MonthlyMeanFragment">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/title_prediction"
         android:text = "@string/highest_delays"
         android:textSize="@dimen/statsTitleText"
         android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction"
         />
 
     <com.github.mikephil.charting.charts.BarChart
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction" />
 
     <TextView
         android:id="@+id/error_text"
@@ -57,6 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title_prediction" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

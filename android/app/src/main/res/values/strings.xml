@@ -17,6 +17,9 @@
     <string name="pick_date">Pick date</string>
     <string name="select_train_to_predict">Select train to predict</string>
     <string name="selected_date">Selected date:</string>
+    <string name="prediction_result_title">Prediction results</string>
+    <string name="prediction_result_info_title">Train info</string>
+    <string name="most_probable_cause_of_delay">Most probable cause of delay:</string>
 
 
     <string-array name="time_period_array">

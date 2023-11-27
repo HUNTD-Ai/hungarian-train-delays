@@ -2,8 +2,6 @@ package com.huntdai.hungariantraindelays.ui.prediction.prediction_result
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.huntdai.hungariantraindelays.data.DataSourceError
-import com.huntdai.hungariantraindelays.data.DataSourceResponse
 import com.huntdai.hungariantraindelays.data.DataSourceResult
 import com.huntdai.hungariantraindelays.data.network.delay_cause.DelayCauseDataSource
 import com.huntdai.hungariantraindelays.data.network.prediction.DelayPredictionDataSource
@@ -30,55 +28,57 @@ class PredictionResultViewModel @Inject constructor(
         MutableStateFlow<PredictionResultUIState>(PredictionResultUIState.Initial)
     val uiState: StateFlow<PredictionResultUIState> = _uiState.asStateFlow()
 
-    fun initUiState(route: String, departureTime: String, trainNumber: String, departureDateInMillis : String) =
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val parts = departureTime.split(":")
-                val hour = parts[0]
-                val minute = parts[1]
-                val date = Calendar.getInstance()
-                date.timeInMillis = departureDateInMillis.toLong()
-                date.set(Calendar.HOUR_OF_DAY, hour.toInt())
-                date.set(Calendar.MINUTE, minute.toInt())
+    fun initUiState(
+        route: String, departureTime: String, trainNumber: String, departureDateInMillis: String
+    ) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            val parts = departureTime.split(":")
+            val hour = parts[0]
+            val minute = parts[1]
+            val date = Calendar.getInstance()
+            date.timeInMillis = departureDateInMillis.toLong()
+            date.set(Calendar.HOUR_OF_DAY, hour.toInt())
+            date.set(Calendar.MINUTE, minute.toInt())
 
-                val departure = date.time.toInstant().toString()
-                _uiState.update { PredictionResultUIState.Loading }
-                val delayTimeResponse = delayPredictionDataSource.getDelayPrediction(
-                    route = route,
-                    departureTime = departure,
-                    trainNumber = trainNumber.toInt()
-                )
-                val delayCauseResponse = delayCauseDataSource.getDelayCause(
-                    route = route,
-                    departureTime = departure,
-                    trainNumber = trainNumber.toInt()
-                )
-                val liveStatsResponse =
-                    statsDataSource.getLiveData(route = route, trainNumber = trainNumber.toInt())
-                if (delayCauseResponse is DataSourceResult && delayTimeResponse is DataSourceResult) {
-                    if (liveStatsResponse !is DataSourceResult) {
-                        _uiState.update {
-                            PredictionResultUIState.Loaded(
-                                delayTime = delayTimeResponse.result.label,
-                                delayCause = delayCauseResponse.result.label,
-                                null, null
-                            )
-                        }
-                    } else {
-                        _uiState.update {
-                            PredictionResultUIState.Loaded(
-                                delayTime = (delayTimeResponse as DataSourceResult).result.label,
-                                delayCause = (delayCauseResponse as DataSourceResult).result.label,
-                                liveDelayTime = liveStatsResponse.result.delay.toString(),
-                                liveDelayCause = liveStatsResponse.result.delayCause.toString()
-                            )
-                        }
+            val departure = date.time.toInstant().toString()
+            _uiState.update { PredictionResultUIState.Loading }
+            val delayTimeResponse = delayPredictionDataSource.getDelayPrediction(
+                route = route, departureTime = departure, trainNumber = trainNumber.toInt()
+            )
+            val delayCauseResponse = delayCauseDataSource.getDelayCause(
+                route = route, departureTime = departure, trainNumber = trainNumber.toInt()
+            )
+            val liveStatsResponse =
+                statsDataSource.getLiveData(route = route, trainNumber = trainNumber.toInt())
+            if (delayCauseResponse is DataSourceResult && delayTimeResponse is DataSourceResult) {
+                if (liveStatsResponse !is DataSourceResult) {
+                    _uiState.update {
+                        PredictionResultUIState.Loaded(
+                            delayLabel = delayTimeResponse.result.label,
+                            delayScore = delayTimeResponse.result.score,
+                            delayCause = delayCauseResponse.result.label,
+                            delayCauseScore = delayCauseResponse.result.score,
+                            null,
+                            null
+                        )
                     }
-
                 } else {
-                    _uiState.update { PredictionResultUIState.Error }
+                    _uiState.update {
+                        PredictionResultUIState.Loaded(
+                            delayLabel = delayTimeResponse.result.label,
+                            delayScore = delayTimeResponse.result.score,
+                            delayCause = delayCauseResponse.result.label,
+                            delayCauseScore = delayCauseResponse.result.score,
+                            liveDelayTime = liveStatsResponse.result.delay.toString(),
+                            liveDelayCause = liveStatsResponse.result.delayCause.toString()
+                        )
+                    }
                 }
 
+            } else {
+                _uiState.update { PredictionResultUIState.Error }
             }
+
         }
+    }
 }

@@ -106,7 +106,7 @@ class MonthlyTotalFragment : Fragment() {
         }
 
         val barDataSet = BarDataSet(entries, "Minutes")
-        barDataSet.color = ContextCompat.getColor(requireContext(), R.color.primary);
+        barDataSet.color = ContextCompat.getColor(requireContext(), R.color.primary)
         barDataSet.valueTextColor = getCurrentTextcolor(requireContext())
 
         val description = Description()

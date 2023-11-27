@@ -23,7 +23,6 @@ import com.huntdai.hungariantraindelays.ui.prediction.date_picker.DatePickerFrag
 import com.huntdai.hungariantraindelays.utils.combineRouteEnds
 import com.huntdai.hungariantraindelays.utils.createDateString
 import com.huntdai.hungariantraindelays.utils.getTodaysDate
-import com.huntdai.hungariantraindelays.utils.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar

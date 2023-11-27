@@ -49,5 +49,8 @@
             app:argType="string" />
         <argument android:name="departureDateInMillis"
             app:argType="string" />
+        <argument
+            android:name="arrivalTime"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -4,12 +4,29 @@
     <string name="title_prediction">Prediction</string>
     <string name="title_stats">Statistics</string>
     <string name="title_about">About</string>
+    <string name="generic_error">An error occured during the loading of data.</string>
+
+    <string name="monthly_mean_delays">Monthly mean delays - 2023</string>
+    <string name="total_delays">Total delay per month - 2023</string>
+    <string name="highest_delays">Highest delays</string>
+    <string name="mean_delays_per_route">Mean delays per route</string>
+    <string name="predict_title">Delay prediction</string>
+    <string name="show_delays">Show delays</string>
+    <string name="from">From:</string>
+    <string name="to">To:</string>
+    <string name="pick_date">Pick date</string>
+    <string name="select_train_to_predict">Select train to predict</string>
+    <string name="selected_date">Selected date:</string>
+    <string name="prediction_result_title">Prediction results</string>
+    <string name="prediction_result_info_title">Train info</string>
+    <string name="most_probable_cause_of_delay">Most probable cause of delay:</string>
+    <string name="another_prediction">Another prediction</string>
+    <string name="selected_date_is_invalid">Can\'t select dates from the past for prediction</string>
 
 
     <string-array name="time_period_array">
-        <item>Last week</item>
-        <item>Last month</item>
-        <item>Six months</item>
+        <item>Past week</item>
+        <item>Past month</item>
     </string-array>
 
 </resources>

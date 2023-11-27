@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="defaultLayoutMargin">18dp</dimen>
+    <dimen name="smallLayoutMargin">4dp</dimen>
+    <dimen name="statsTitleText">18sp</dimen>
+    <dimen name="smallButtonText">18sp</dimen>
+    <dimen name="bigButtonText">22sp</dimen>
+
+    <dimen name="smallText">14sp</dimen>
+    <dimen name="mediumText">16sp</dimen>
+</resources>

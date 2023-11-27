@@ -18,56 +18,34 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PredictionViewModel@Inject constructor(
+class PredictionViewModel @Inject constructor(
     private val statsDataSource: StatsDataSource,
-    private val delayCauseApi: DelayCauseApi,
-    private val delayPredictionApi: DelayPredictionApi
 ) : ViewModel() {
 
     private val routeDestinationMap = MutableStateFlow<RouteDestinationMap?>(null)
-    private val trainNumber = MutableStateFlow<Int?>(null)
     private val isLoading = MutableStateFlow<Boolean>(false)
     private val isError = MutableStateFlow<Boolean>(false)
 
-        val uiState = combine(
+    val uiState = combine(
         routeDestinationMap,
-            trainNumber,
-            isLoading,
-            isError
-    ) { routeDestinationMap, trainNumber, isLoading, isError->
-            if (isError){
-                PredictionUIState.Error(
-                    routeDestinationMap = routeDestinationMap
-                )
-            }
-            if(isLoading){
-                PredictionUIState.Loading(
-                    routeDestinationMap = routeDestinationMap
-                )
-            }
-            if(routeDestinationMap != null){
-                if(trainNumber != null){
-                    PredictionUIState.TrainNumberSelected(
-                        routeDestinationMap = routeDestinationMap,
-                        trainNumber = trainNumber
-                    )
-                }
-                else{
-                    PredictionUIState.RoutesLoaded(
-                        routeDestinationMap = routeDestinationMap,
-                    )
-                }
-
-            }
-            else{
-                PredictionUIState.Initial(
-                    routeDestinationMap = null
-                )
-            }
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), initialValue = PredictionUIState.Initial(
-                routeDestinationMap = null
+        isLoading,
+        isError
+    ) { routeDestinationMap, isLoading, isError ->
+        if (isError) {
+            return@combine PredictionUIState.Error
+        }
+        if (isLoading) {
+            return@combine PredictionUIState.Loading
+        }
+        if (routeDestinationMap != null) {
+            return@combine PredictionUIState.Loaded(
+                routeDestinationMap = routeDestinationMap,
             )
+        } else {
+            return@combine PredictionUIState.Initial
+        }
+    }.stateIn(
+        viewModelScope, SharingStarted.WhileSubscribed(), initialValue = PredictionUIState.Initial
     )
 
 
@@ -77,14 +55,11 @@ class PredictionViewModel@Inject constructor(
             is DataSourceError -> {
                 isError.update { true }
             }
+
             is DataSourceResult -> {
                 routeDestinationMap.update { response.result }
             }
         }
         isLoading.update { false }
-    }
-
-    fun errorHandled() = viewModelScope.launch {
-        isError.update { false }
     }
 }

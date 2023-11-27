@@ -4,5 +4,5 @@ data class LiveDataResponse(
     var route: String,
     var trainNumber: Int,
     var delay: Int,
-    var delayCause: String
+    var delayCause: String?
 )

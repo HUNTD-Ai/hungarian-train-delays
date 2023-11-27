@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MeanPerRouteViewModel@Inject constructor(
+class MeanPerRouteViewModel @Inject constructor(
     private val statsDataSource: StatsDataSource
 ) : ViewModel() {
 
@@ -27,45 +27,45 @@ class MeanPerRouteViewModel@Inject constructor(
     private val isLoading = MutableStateFlow<Boolean>(false)
     private val isError = MutableStateFlow<Boolean>(false)
 
-        val uiState = combine(
+    val uiState = combine(
         routeDestinationMap,
         delays,
-            isLoading,
-            isError
-    ) { routeDestinationMap, delays, isLoading, isError->
-            if (isError){
-                MeanPerRouteUIState.Error(
-                    routeDestinationMap = routeDestinationMap
+        isLoading,
+        isError
+    ) { routeDestinationMap, delays, isLoading, isError ->
+        if (isError) {
+            return@combine MeanPerRouteUIState.Error(
+                routeDestinationMap = routeDestinationMap
+            )
+        }
+        if (isLoading) {
+            return@combine MeanPerRouteUIState.Loading(
+                routeDestinationMap = routeDestinationMap
+            )
+        }
+        if (routeDestinationMap != null) {
+            if (delays != null) {
+                return@combine MeanPerRouteUIState.DelaysLoaded(
+                    routeDestinationMap = routeDestinationMap,
+                    delays = delays
+                )
+            } else {
+                return@combine MeanPerRouteUIState.RoutesLoaded(
+                    routeDestinationMap = routeDestinationMap,
                 )
             }
-            if(isLoading){
-                MeanPerRouteUIState.Loading(
-                    routeDestinationMap = routeDestinationMap
-                )
-            }
-            if(routeDestinationMap != null){
-                if(delays != null){
-                    MeanPerRouteUIState.DelaysLoaded(
-                        routeDestinationMap = routeDestinationMap,
-                        delays = delays
-                    )
-                }
-                else{
-                    MeanPerRouteUIState.RoutesLoaded(
-                        routeDestinationMap = routeDestinationMap,
-                    )
-                }
 
-            }
-            else{
-                MeanPerRouteUIState.Initial(
-                    routeDestinationMap = null
-                )
-            }
-    }.stateIn(
-        viewModelScope, SharingStarted.WhileSubscribed(), initialValue = MeanPerRouteUIState.Initial(
+        } else {
+            return@combine MeanPerRouteUIState.Initial(
                 routeDestinationMap = null
             )
+        }
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        initialValue = MeanPerRouteUIState.Initial(
+            routeDestinationMap = null
+        )
     )
 
 
@@ -75,6 +75,7 @@ class MeanPerRouteViewModel@Inject constructor(
             is DataSourceError -> {
                 isError.update { true }
             }
+
             is DataSourceResult -> {
                 routeDestinationMap.update { response.result }
             }
@@ -88,10 +89,16 @@ class MeanPerRouteViewModel@Inject constructor(
 
     fun loadDelays(startDestination: String, endDestination: String) = viewModelScope.launch {
         isLoading.update { true }
-        when (val response = statsDataSource.getMeanRouteDelay(Route(startDestination = startDestination, endDestination = endDestination))) {
+        when (val response = statsDataSource.getMeanRouteDelay(
+            Route(
+                startDestination = startDestination,
+                endDestination = endDestination
+            )
+        )) {
             is DataSourceError -> {
                 isError.update { true }
             }
+
             is DataSourceResult -> {
                 delays.update { response.result }
             }

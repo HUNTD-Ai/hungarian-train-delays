@@ -66,6 +66,7 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
                                 startDestinations.getOrDefault(startDestination, mutableListOf())
                                     .toMutableList()
                             endDestinationsAlreadyAdded.add(endDestination)
+                            endDestinationsAlreadyAdded.sort()
                             startDestinations[startDestination] = endDestinationsAlreadyAdded
                         }
                     }
@@ -115,29 +116,29 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
             }
         }
 
-    suspend fun getHighestDelayInTimePeriod(timePeriod: TimePeriod): DataSourceResponse<List<Delay>> =
+    suspend fun getHighestDelayInTimePeriod(timePeriod: TimePeriod = TimePeriod.PAST_MONTH): DataSourceResponse<List<Delay>> =
         withContext(Dispatchers.IO) {
             try {
                 val today = getTodaysDate()
                 val todaysUnix = today.time.time
                 val previousUnix = when (timePeriod) {
-                    TimePeriod.WEEK -> {
+                    TimePeriod.PAST_WEEK -> {
                         val previousDay = today
                         previousDay.add(Calendar.DATE, -7)
                         previousDay.time.time
                     }
 
-                    TimePeriod.MONTH -> {
+                    TimePeriod.PAST_MONTH -> {
                         val previousDay = today
                         previousDay.add(Calendar.DATE, -30)
                         previousDay.time.time
                     }
 
-                    TimePeriod.SIX_MONTHS -> {
-                        val previousDay = today
-                        previousDay.add(Calendar.DATE, -180)
-                        previousDay.time.time
-                    }
+//                    TimePeriod.SIX_MONTHS -> {
+//                        val previousDay = today
+//                        previousDay.add(Calendar.DATE, -180)
+//                        previousDay.time.time
+//                    }
                 }
                 val body = HighestDelayInTimePeriodBody(
                     startTimestamp = previousUnix.toString(),
@@ -166,11 +167,12 @@ class StatsDataSource @Inject constructor(private val statsApi: StatsApi) {
         withContext(Dispatchers.IO) {
             try {
                 val today = getTodaysDate()
+                //today.set(Calendar.)
                 val todaysUnix = today.time.time
 
-                val monthAgo = today
-                monthAgo.add(Calendar.DATE, -30)
-                val monthAgoUnix = monthAgo.time.time
+                val nineMonthAgo = today
+                nineMonthAgo.add(Calendar.DATE, -270)
+                val monthAgoUnix = nineMonthAgo.time.time
 
                 val body = MeanRouteDelayBody(
                     route = combineRouteEnds(route.startDestination, route.endDestination),

@@ -1,34 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.prediction.prediction_result.PredictionResultFragment">
 
-    <TextView
-        android:id="@+id/predicted_delay_time_text"
+    <LinearLayout
+        android:id="@+id/prediction_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
-    <TextView
-        android:id="@+id/predicted_delay_cause_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/title_prediction"
+            android:layout_margin="@dimen/defaultLayoutMargin"
+            android:text="@string/prediction_result_title"
+            android:textSize="@dimen/statsTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
 
-    <TextView
-        android:id="@+id/live_delay_time_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Experiencing delays:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
 
-    <TextView
-        android:id="@+id/live_delay_cause_text"
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/delay_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/delay_cause_label_text"
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "@string/most_probable_cause_of_delay"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/delay_cause_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+        </TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/info_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/defaultLayoutMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/prediction_layout"
+        >
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/title_info"
+            android:layout_margin="@dimen/defaultLayoutMargin"
+            android:text="@string/prediction_result_info_title"
+            android:textSize="@dimen/statsTitleText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/live_info_available"
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/mediumText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/live_delay_time_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/live_delay_cause_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Departure time:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/departuretime_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Arrival time:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/arrivaltime_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Route:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/route_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:text = "Train number:"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+        <TextView
+            style="@style/Theme.HungarianTrainDelays"
+            android:id="@+id/trainnumber_text"
+            android:layout_margin="@dimen/smallLayoutMargin"
+            android:textSize="@dimen/smallText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+        </TextView>
+
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/another_prediction_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        style="@style/Theme.HungarianTrainDelays"
+        android:textSize="@dimen/smallButtonText"
+        android:text="@string/another_prediction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/smallLayoutMargin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/info_layout"
+        />
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/load_progressbar"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_layout"
+        android:indeterminateTint="@android:color/darker_gray"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/generic_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

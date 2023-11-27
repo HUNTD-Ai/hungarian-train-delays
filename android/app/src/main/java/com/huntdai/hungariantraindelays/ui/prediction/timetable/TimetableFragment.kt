@@ -6,15 +6,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.huntdai.hungariantraindelays.databinding.FragmentTimetableBinding
 import com.huntdai.hungariantraindelays.ui.prediction.timetable.adapter.TimetableAdapter
 import com.huntdai.hungariantraindelays.ui.prediction.timetable.models.TrainDeparture
+import com.huntdai.hungariantraindelays.utils.createDateString
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -29,6 +33,10 @@ class TimetableFragment : Fragment() {
     private lateinit var dateInMillis: String
     private lateinit var dateString: String //2023-11-26 like format
 
+    private lateinit var loadProgressBar: ProgressBar
+    private lateinit var errorText: TextView
+    private lateinit var rv: RecyclerView
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         binding = FragmentTimetableBinding.inflate(LayoutInflater.from(context))
@@ -42,9 +50,20 @@ class TimetableFragment : Fragment() {
         dateInMillis = args.dateInMillis
         val date = Calendar.getInstance()
         date.timeInMillis = dateInMillis.toLong()
-        dateString = date.get(Calendar.YEAR).toString() + "-" + date.get(Calendar.MONTH).toString() + "-" + date.get(Calendar.DAY_OF_MONTH).toString()
+        dateString = createDateString(
+            year = date.get(Calendar.YEAR),
+            month = (date.get(Calendar.MONTH) + 1),
+            day = date.get(Calendar.DAY_OF_MONTH)
+        )
 
         Log.d("DEMO", "TIMETABLEINFO ATVEVE" + route + dateString)
+
+        loadProgressBar = binding.loadProgressbar
+        errorText = binding.errorText
+        rv = binding.trainList
+
+        val title = "$route on $dateString"
+        binding.titlePrediction.text = title
 
         return binding.root
     }
@@ -65,12 +84,30 @@ class TimetableFragment : Fragment() {
     private fun render(uiState: TimetableUIState) {
         Log.d("DEMO", "TIMETABLEINFO UISTATE" + uiState.toString())
         when (uiState) {
-            is TimetableUIState.Initial -> {}
+            is TimetableUIState.Initial -> {
+                rv.visibility = View.GONE
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.GONE
+            }
+
             is TimetableUIState.Loaded -> {
                 adapter.replaceList(uiState.trains)
+                rv.visibility = View.VISIBLE
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.GONE
             }
-            TimetableUIState.Error -> {}
-            TimetableUIState.Loading -> {}
+
+            TimetableUIState.Error -> {
+                rv.visibility = View.GONE
+                loadProgressBar.visibility = View.GONE
+                errorText.visibility = View.VISIBLE
+            }
+
+            TimetableUIState.Loading -> {
+                rv.visibility = View.GONE
+                loadProgressBar.visibility = View.VISIBLE
+                errorText.visibility = View.GONE
+            }
         }
     }
 
@@ -79,7 +116,6 @@ class TimetableFragment : Fragment() {
         adapter = TimetableAdapter()
         adapter.setOnItemClickListener(this::onItemClick)
 
-        val rv = binding.trainList
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = adapter
     }
@@ -88,6 +124,7 @@ class TimetableFragment : Fragment() {
         val action = TimetableFragmentDirections.actionTimetableFragmentToPredictionResultFragment(
             route = trainDeparture.route,
             departureTime = trainDeparture.departureTime,
+            arrivalTime = trainDeparture.arrivalTime,
             trainNumber = trainDeparture.trainNumber,
             departureDateInMillis = dateInMillis
         )

@@ -41,7 +41,7 @@ class DelayPredictionDataSource @Inject constructor(private val delayPredictionA
                 } else {
                     DataSourceError
                 }
-            } catch (error: IOException) {
+            } catch (error: Exception) {
                 Log.d("DEMO", "IO EXC" + error.toString())
                 DataSourceError
             }

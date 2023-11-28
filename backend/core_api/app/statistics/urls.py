@@ -46,7 +46,6 @@ async def get_live_train_data(
 ) -> LiveTrainDataResponse:
     train_data = await mav_api.get_train_data(
         network.get_session(),
-        train_request.route,
         train_request.trainNumber,
     )
     if train_data is None:
@@ -55,7 +54,7 @@ async def get_live_train_data(
             detail='Could not find train with supplied data',
         )
     return LiveTrainDataResponse(
-        route=train_request.route,
+        route=train_data.route,
         trainNumber=train_request.trainNumber,
         delay=train_data.delay,
         delayCause=train_data.delay_cause,

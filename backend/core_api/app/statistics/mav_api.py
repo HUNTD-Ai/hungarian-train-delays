@@ -61,7 +61,7 @@ async def get_timetable_info(
     }
     try:
         async with session.get(url=INFO_BASE_URL, params=params) as resp:
-            text = await resp.text()
+            text = await resp.text(encoding='latin1')
             return parse_timetable_html(route, text)
     except Exception:
         LOGGER.warn(
@@ -97,8 +97,8 @@ def parse_timetable_html(
             pass
         journey = PassengerJourneyPlan(
             route=route,
-            departure_time=meaningful_info[0],
-            arrival_time=meaningful_info[1],
+            departure_time=meaningful_info[0].split(' ')[0],
+            arrival_time=meaningful_info[1].split(' ')[0],
             changes=changes,
             duration=meaningful_info[3],
             length_km=meaningful_info[4],
@@ -193,15 +193,14 @@ def parse_detailed_timetable_html(
 
 async def get_train_data(
     session: aiohttp.ClientSession,
-    route: str,
     train_number: int,
 ) -> Optional[TrainData]:
     train_data = await get_all_train_data(session)
-    same_route = [train for train in train_data if train.route == route]
     train = None
-    for t in same_route:
+    for t in train_data:
         if t.train_number.endswith(str(train_number)):
             train = t
+            break
     if train is None:
         return None
     if train.delay > 5:

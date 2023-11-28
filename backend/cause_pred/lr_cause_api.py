@@ -1,12 +1,22 @@
 import pandas as pd
 from pycaret.classification import load_model, predict_model
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import datetime as dt
 import os
 
 from pydantic import BaseModel
 
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 
 model_name = os.environ.get('MODEL_NAME')
 model_path = (

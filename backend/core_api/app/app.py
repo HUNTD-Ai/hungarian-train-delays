@@ -10,7 +10,17 @@ import app.network_utils as network
 from app.db_utils import init
 from .statistics.urls import statRouter
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
 app.include_router(statRouter)
 
 

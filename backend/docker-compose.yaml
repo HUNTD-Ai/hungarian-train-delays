@@ -1,6 +1,6 @@
 services:
   core-api:
-    image: ghcr.io/huntd-ai/core:0.0.3
+    image: ghcr.io/huntd-ai/core:0.0.4
     networks:
         - backend
     environment:

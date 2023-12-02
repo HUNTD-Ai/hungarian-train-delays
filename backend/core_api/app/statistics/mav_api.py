@@ -38,8 +38,6 @@ INFO_BASE_URL = 'https://elvira.mav-start.hu/elvira.dll/x/uf'
 WARNING_FIELD_STYLE = (
     'background-color:red;color:white;text-align:center;white-space: normal;'
 )
-TIMETABLE_ROW_STYLE_1 = 'tr[style*="color:#0000FF;"]'
-TIMETABLE_ROW_STYLE_2 = 'tr[style*="color:#008000;"]'
 LOGGER = app.logger.get_logger(__name__)
 
 cache = Cache()
@@ -81,8 +79,10 @@ def parse_timetable_html(
     timetable = par_div.findChild('table')
     if timetable is None:
         return None
-    visible_rows = timetable.select(TIMETABLE_ROW_STYLE_1)
-    visible_rows += timetable.select(TIMETABLE_ROW_STYLE_2)
+    visible_rows = [
+        info_cell.findParent()
+        for info_cell in timetable.find_all('td', class_='info')
+    ]
     res = []
     for row in visible_rows:
         cells = row.find_all('td')

@@ -46,6 +46,7 @@ class Scheduler:
             self.tasks.pop(name)
 
     def run(self) -> None:
+        logger.info('Started scheduler loop')
         tsk = self._loop()
         self.loop.create_task(tsk)
 

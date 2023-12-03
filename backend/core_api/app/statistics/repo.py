@@ -72,6 +72,7 @@ async def get_daily_max_delays(
         datetime_to_utc_timestamp(start_timestamp, return_ms=True),
         datetime_to_utc_timestamp(end_timestamp, return_ms=True),
     )
+    logger.info(res)
     return [
         TimestampedDelay(
             timestamp=record.get('timestamp'),
@@ -123,6 +124,7 @@ async def get_routes(conn: asyncpg.Connection) -> List[str]:
 
 
 async def refresh_journey_delays() -> None:
+    logger.info('refreshing journey delays')
     async with get_connection() as conn:
         await conn.execute('REFRESH MATERIALIZED VIEW journey_delays;')
 
@@ -152,6 +154,7 @@ async def refresh_montly_mean() -> None:
 
 
 async def refresh_daily_highest() -> None:
+    logger.info('refresing daily daily-highest delays')
     path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)),
         'queries',
@@ -189,11 +192,11 @@ def get_periodic_tasks() -> List[Tuple[str, DailyTask]]:
     return [
         (
             'refresh_journey_delays',
-            DailyTask(hour=23, minute=55, async_func=refresh_montly_mean),
+            DailyTask(hour=1, minute=40, async_func=refresh_journey_delays),
         ),
         (
             'refresh_daily_highest',
-            DailyTask(hour=0, minute=5, async_func=refresh_daily_highest),
+            DailyTask(hour=1, minute=50, async_func=refresh_daily_highest),
         ),
         (
             'refresh_mean',
@@ -201,13 +204,13 @@ def get_periodic_tasks() -> List[Tuple[str, DailyTask]]:
         ),
         (
             'refresh_sum',
-            DailyTask(hour=2, minute=1, async_func=refresh_montly_sum),
+            DailyTask(hour=2, minute=10, async_func=refresh_montly_sum),
         ),
         (
             'refresh_monthly_mean_route',
             DailyTask(
                 hour=2,
-                minute=3,
+                minute=20,
                 async_func=refresh_monthly_mean_route_delay,
             ),
         ),

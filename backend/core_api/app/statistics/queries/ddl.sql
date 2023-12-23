@@ -24,7 +24,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS journey_delays AS
 SELECT
   td.elvira_id,
   to_timestamp(MIN("timestamp")/1000) AS journey_start,
-  COALESCE(AVG(NULLIF(delay, 'NaN')::float)) AS journey_avg_delay
+  COALESCE(AVG(NULLIF(delay, 'NaN')::float), 0) AS journey_avg_delay
 FROM
   train_data td
 WHERE

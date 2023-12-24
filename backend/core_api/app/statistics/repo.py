@@ -5,7 +5,7 @@ import datetime as dt
 from typing import List, Optional, Tuple
 
 from app.db_utils import get_connection
-from app.scheduler import DailyTask
+from app.scheduler import DailyTask, Task
 from app.time_utils import datetime_to_utc_timestamp
 from app.logger import get_logger
 from .dtos import TimestampedDelay
@@ -188,7 +188,7 @@ def _read_query_from_file(path: str) -> Optional[str]:
         return None
 
 
-def get_periodic_tasks() -> List[Tuple[str, DailyTask]]:
+def get_periodic_tasks() -> List[Tuple[str, Task]]:
     return [
         (
             'refresh_journey_delays',

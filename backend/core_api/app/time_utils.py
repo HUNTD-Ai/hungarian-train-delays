@@ -1,5 +1,4 @@
 import datetime as dt
-from time import gmtime, strftime
 
 
 def current_timestamp_utc() -> int:

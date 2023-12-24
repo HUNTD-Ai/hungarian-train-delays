@@ -16,8 +16,8 @@ class Task(ABC):
         self.last_execution: Optional[dt.datetime] = None
 
     async def run(self) -> None:
-        await self.func()
         self.last_execution = dt.datetime.now()
+        await self.func()
 
     @abstractmethod
     def should_run(self) -> bool:
@@ -39,7 +39,7 @@ class DailyTask(Task):
 
     def should_run(self) -> bool:
         now = dt.datetime.now()
-        if now.minute != self.minute and now.hour != self.hour:
+        if now.minute != self.minute or now.hour != self.hour:
             return False
         if self.last_execution is None:
             return True
@@ -62,7 +62,7 @@ class HourlyTask(Task):
 
     def should_run(self) -> bool:
         now = dt.datetime.now()
-        if now.second != self.second and now.minute != self.minute:
+        if now.second != self.second or now.minute != self.minute:
             return False
         if self.last_execution is None:
             return True

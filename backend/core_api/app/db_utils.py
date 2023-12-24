@@ -32,3 +32,9 @@ async def get_connection():
         yield conn
     finally:
         await _DB_POOL.release(conn)
+
+
+async def close_pool():
+    global _DB_POOL
+    if _DB_POOL is not None:
+        await _DB_POOL.close()

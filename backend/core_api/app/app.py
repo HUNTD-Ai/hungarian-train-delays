@@ -3,12 +3,13 @@ import asyncio
 
 from fastapi import FastAPI
 
+import app.mav.scrape_data as scraper
 import app.statistics.repo as sr
 import app.scheduler as scheduler
 import app.network_utils as network
-
-from app.db_utils import init
+from app.db_utils import init, close_pool
 from .statistics.urls import statRouter
+from .mav.urls import mavRouter
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -22,6 +23,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 app.include_router(statRouter)
+app.include_router(mavRouter)
 
 
 @app.get('/')
@@ -54,10 +56,13 @@ async def init_resources():
     if main_replica:
         schlr = scheduler.Scheduler(asyncio.get_event_loop())
         tasks = sr.get_periodic_tasks()
+        tasks += scraper.get_periodic_tasks()
         for name, task in tasks:
             schlr.add_task(name, task)
         schlr.run()
 
+
 @app.on_event('shutdown')
 async def close_resources():
     await network.close_session()
+    await close_pool()

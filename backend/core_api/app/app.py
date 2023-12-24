@@ -29,13 +29,8 @@ async def root():
     return {'message': 'Hello World'}
 
 
-@app.on_event('shutdown')
-async def close_resources():
-    await network.close_session()
-
-
-# run from uvicorn
-if __name__ == 'app.app':
+@app.on_event('startup')
+async def init_resources():
     # db config
     db_conf = {
         'database': os.environ.get('DB_DB'),
@@ -51,6 +46,8 @@ if __name__ == 'app.app':
     # set up scheduled tasks to update statistics
     loop = asyncio.get_running_loop()
     loop.create_task(init(db_conf, [sr.init]))
+    # set up network client to call other services
+    network.init(loop)
 
     # TODO set to false by default when moving onto k8s deployment
     main_replica = os.environ.get('MAIN_REPLICA', True)
@@ -61,5 +58,6 @@ if __name__ == 'app.app':
             schlr.add_task(name, task)
         schlr.run()
 
-    # set up network client to call other services
-    network.init(loop)
+@app.on_event('shutdown')
+async def close_resources():
+    await network.close_session()

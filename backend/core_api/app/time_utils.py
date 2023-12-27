@@ -1,7 +1,7 @@
 import datetime as dt
 
 
-def current_timestamp_utc() -> int:
+def current_timestamp_utc_seconds() -> int:
     return int(dt.datetime.now(dt.timezone.utc).timestamp())
 
 

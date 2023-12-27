@@ -41,7 +41,7 @@ async def store_train_data(
         """,
         [
             (
-                time_utils.current_timestamp_utc(),
+                time_utils.current_timestamp_utc_seconds() * 1000,
                 t.elvira_id,
                 t.route,
                 t.train_number,
@@ -61,7 +61,7 @@ def get_cached_data() -> Optional[List[TrainData]]:
     if (
         cache.last_fetch is not None
         and cache.last_fetch
-        > time_utils.current_timestamp_utc() - CACHE_MAX_AGE_SECONDS
+        > time_utils.current_timestamp_utc_seconds() - CACHE_MAX_AGE_SECONDS
     ):
         return cache.train_data
     return None
@@ -69,5 +69,5 @@ def get_cached_data() -> Optional[List[TrainData]]:
 
 def cache_train_data(train_data: List[TrainData]) -> None:
     global cache
-    cache.last_fetch = time_utils.current_timestamp_utc()
+    cache.last_fetch = time_utils.current_timestamp_utc_seconds()
     cache.train_data = train_data

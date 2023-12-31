@@ -13,6 +13,8 @@ export default {
         cardBackgroundLight: '#FFFFFF',
         textBoxBackgroundDark: '#525F61',
         textBoxBackgroundLight: '#D9D9D9',
+        tableSelectedRowBackgroundDark: '#718081',
+        tableSelectedRowBackgroundLight: '#cdcdd0',
         textBoxTextColorDark: '#F9FAFB',
         textBoxTextColorLight: '#111827',
       },

@@ -5,6 +5,7 @@ import Layout from './layout.tsx';
 import HomePage from './pages/home-page.tsx';
 import StatisticsPage from './pages/statistics-page.tsx';
 import AboutPage from './pages/about-page.tsx';
+import TimetablePage from './pages/timetable-page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: 'about',
         element: <AboutPage />,
+      },
+      {
+        path: 'timetable',
+        element: <TimetablePage />,
       },
       {
         path: '*',

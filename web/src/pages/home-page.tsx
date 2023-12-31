@@ -81,12 +81,7 @@ const HomePage = () => {
 
   return (
     <div className="flex h-full w-full flex-col items-center gap-y-4 overflow-y-auto bg-backgroundLight px-5 py-8 text-textColor dark:bg-backgroundDark">
-      {result == null && (
-        <DelayPredictionCard
-          routes={routes}
-          onSubmit={onSubmit}
-        />
-      )}
+      {result == null && <DelayPredictionCard routes={routes} />}
       {result != null && (
         <>
           <PredictionResultCard result={result} />

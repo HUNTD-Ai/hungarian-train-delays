@@ -4,6 +4,7 @@ export type Train = {
   departureTime: string;
   arrivalTime: string;
   travelTime: string;
+  travelDistance: string;
 };
 
 export type PredictionRequest = {
